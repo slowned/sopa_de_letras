@@ -1,7 +1,7 @@
 # sopa_de_letras
 
-# Intergrantes
+## Intergrantes
 
-Juan Almada
-Marx Morales
-Mariano Otero Llambay
+* Juan Almada
+* Marx Morales
+* Mariano Otero Llambay
