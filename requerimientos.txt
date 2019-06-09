@@ -1,3 +1,4 @@
 pattern3==3.0.0
 PySimpleGUI==3.37.0
 wiktionaryparser==0.0.97
+patterns==0.3
