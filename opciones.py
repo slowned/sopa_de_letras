@@ -1,6 +1,9 @@
 import PySimpleGUI as sg
+from constantes import TIPO_PALABRAS_CANT
 
 from utilidades import *
+
+
 
 config = Configuracion()
 
@@ -17,6 +20,7 @@ layout = [
     [sg.Text('Orientacion Vertical/Horizontal')],
     [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('Cantidad de palabras a mostrar')],
+    [sg.Column(TIPO_PALABRAS_CANT, background_color='#F7F3EC')],
     [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('Mayuscula/Minuscula')],
     [sg.Radio('Mayusculas', "caps", default=True), sg.Radio('Minusculas', "caps")],
@@ -35,7 +39,7 @@ window = sg.Window("Sopa de Letras").Layout(layout)
 
 while True:
     evento, valores = window.Read()
-    if(evento == 'Agregar'):
+    if evento == 'Agregar':
         palabra = valores.get(2, None)  # en la pos 2 esta el valor del input
         palabra, definicion = Validacion.validar_con_wikcionario(palabra)
         if palabra:
@@ -44,3 +48,8 @@ while True:
             # verificar con paters y agregar el tipo
         else:
             generar_reporte(palabra)
+
+    if evento is None:
+        break
+
+window.Close()
