@@ -1,4 +1,9 @@
 from wiktionaryparser import WiktionaryParser
+from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
+from constantes import LISTA_PALABRAS
+
+
+from pattern.es import parse
 
 __all__ = (
     'Configuracion',
@@ -31,8 +36,9 @@ class Validacion():
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
-        """
-        :return (Boolean, definicion, palabra ,tipo)
+        """:return (True, definicion, palabra ,tipo)
+            False en caso que la palabra no se encuentre en
+            wikcionacio
         """
         palabra = str(palabra.lower())
         word = cls.parser().fetch(palabra, "spanish")
@@ -44,6 +50,12 @@ class Validacion():
 
     @classmethod
     def validar_con_pattern(cls, palabra):
+        """ Retorna el tipo de la palabra
+            verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
+            -------------------
+            No se que validar..
+            ------------------
+        """
         pass
 
 
@@ -52,7 +64,7 @@ class Palabra():
         self.__nombre = nombre
         self.__definicion = definicion
         self.longitud = len(self.nombre)
-        self.__tipo = None
+        self.__tipo = self.get_tipo()
 
     def __str__(self):
         return self.__nombre
@@ -77,9 +89,10 @@ class Palabra():
     def tipo(self):
         return self.__tipo
 
-    @tipo.setter
-    def tipo(self, tipo):
-        self.__tipo = tipo
+    def get_tipo(self):
+        parsed = parse(self.nombre)
+        parsed = parsed.split('/')
+        return parsed[1]
 
     def posicion(self):
         pass
