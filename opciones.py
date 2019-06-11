@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
-from constantes import TIPO_PALABRAS_CANT
-
+from constantes import TIPO_PALABRAS_CANT, PALABRAS_TODAS
 
 from utilidades import *
 
@@ -56,7 +55,7 @@ while True:
         palabra, definicion = Validacion.validar_con_wikcionario(palabra)
         if palabra:
             palabra = Palabra(palabra, definicion)
-            config.agregar_palabra(palabra)
+            config.agregar_palabras(palabra)
             # el tipo de la palabra lo genera la palabra
             # verificar con patters
         else:
@@ -68,4 +67,6 @@ while True:
     if evento is None:
         break
 
+
+print(config.palabras())
 window.Close()
