@@ -1,4 +1,5 @@
 import random
+import string
 from wiktionaryparser import WiktionaryParser
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from constantes import PALABRAS_TODAS
@@ -20,6 +21,7 @@ class Configuracion():
     """
 
     __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
+    __alfabeto = string.ascii_letters
 
     def __init__(self):
         # self.cantidad = cantidad
@@ -29,10 +31,10 @@ class Configuracion():
     def palabras_todas(self):
         return self.__palabras_todas
 
-    @palabras_todas.setter
-    def palabras_todas(self, palabra):
+    def agregar_palabras(self, palabra):
         self.__palabras_todas[palabra.tipo].append(palabra)
 
+    @property
     def palabras(self):
         """
         lista de objetos(Palabra) de la sopa de letras
@@ -51,6 +53,10 @@ class Configuracion():
         for key, value in cantidad_palabras.items():
             for i in range(int(value)):
                 self.palabras().append(random.choice(self.palabras_todas[key]))
+
+    @property
+    def alfabeto(self):
+        return self.__alfabeto
 
 
 
