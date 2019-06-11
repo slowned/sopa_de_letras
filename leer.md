@@ -11,5 +11,3 @@
 Python3
 PySimpleGUI (https://pysimplegui.readthedocs.io/en/latest/cookbook/)
 PyPi  ( https://pypi.org/ )
-(https://www.google.com)
-
