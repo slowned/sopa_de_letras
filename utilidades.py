@@ -1,6 +1,7 @@
+import random
 from wiktionaryparser import WiktionaryParser
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
-from constantes import LISTA_PALABRAS
+from constantes import PALABRAS_TODAS
 
 
 from pattern.es import parse
@@ -18,21 +19,43 @@ class Configuracion():
     clase de configuracion para la sopa de letras
     """
 
+    __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
+
     def __init__(self):
-        self.palabras = []
+        # self.cantidad = cantidad
+        self.palabras_juego = []
+
+    @property
+    def palabras_todas(self):
+        return self.__palabras_todas
+
+    @palabras_todas.setter
+    def palabras_todas(self, palabra):
+        self.__palabras_todas[palabra.tipo].append(palabra)
 
     def palabras(self):
         """
         lista de objetos(Palabra) de la sopa de letras
         """
-        return self.palabras
+        return self.palabras_juego
 
-    def agregar_palabra(self, palabra):
-        self.palabras.append(palabra)
+    def seleccionar_palabras(self, evento):
+        """ llega un diccionario con la cantidad de palabras
+            verbos:3, adjetivos:2, sustantivos:1
+            retorna una lista con N(5) palabras
+        """
+        cantidad_palabras = {}
+        cantidad_palabras.update({VERB: evento[VERB]})
+        cantidad_palabras.update({NOUN: evento[NOUN]})
+        cantidad_palabras.update({ADJECTIVE: evento[ADJECTIVE]})
+        for key, value in cantidad_palabras.items():
+            for i in range(int(value)):
+                self.palabras().append(random.choice(self.palabras_todas[key]))
+
 
 
 class Validacion():
-    parser = WiktionaryParser
+    wiki = WiktionaryParser
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
@@ -40,11 +63,15 @@ class Validacion():
             False en caso que la palabra no se encuentre en
             wikcionacio
         """
-        palabra = str(palabra.lower())
-        word = cls.parser().fetch(palabra, "spanish")
-        if word[0].get('definitions'):
-            definicion = word[0].get('definitions')
-            return palabra, definicion
+        try:
+            palabra = str(palabra.lower())
+            word = cls.wiki().fetch(palabra, "spanish")
+            if word[0].get('definitions'):
+                definicion = word[0].get('definitions')
+                return palabra, definicion
+        except:
+            print("Error inesperado al consultar con wikcionario")
+
 
         return False, False
 
