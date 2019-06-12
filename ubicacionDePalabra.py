@@ -1,13 +1,16 @@
-from collections import OrderedDict
 from random import randint
+from utilidades import *
+
 """
-    Funciones para generar ubicacion aleatorio de las palabras
+    - Funciones para generar ubicacion aleatorio de las palabras
+    - Recibimos una Lista con las palabras listas para cargar en la Grilla
 """
 
-#IMPORTANTE: REEMPLAZAR len(palabras) por: palabras.longitud
+#IMPORTANTE: REEMPLAZAR len(palabras) por: palabra.longitud
 def dimensionGrillaHorizontal(lista_palabras):
     """
-            Retorna la dimension de grilla para ubicar palabras HORIZONTALMENTE
+            ->Recibe una Lista de Objeto palabras
+            ->Retorna la dimension de grilla para ubicar palabras HORIZONTALMENTE
     """
     dim_columna = 0
     dim_fila = len(lista_palabras)
@@ -18,96 +21,83 @@ def dimensionGrillaHorizontal(lista_palabras):
 
 def dimensionGrillaVertical(lista_palabras):
     """
-            Retorna la dimension de grilla para ubicar palabras VERTICALMENTE
+                ->Recibe una Lista de Objeto palabras
+                ->Retorna la dimension de grilla para ubicar palabras VERTICALMENTE
     """
-    # dim_columna = 0
-    # dim_fila = len(lista_palabras)
-    # for palabra in lista_palabras:
-    #     if(len(palabra) > dim_columna):
-    #         dim_columna = len(palabra)
-    # return(dim_fila, dim_columna)
     columna, fila =dimensionGrillaHorizontal(lista_palabras)
     return(fila, columna)
 
 
-def generarPosicionHorizontal(len_palabra,dim_fila, dim_columna):
+def generarPosicionHorizontal(palabra,dim_fila, dim_columna):
+    """
+        Funcion que genera la posicion de una palabra, para una grilla de Distribucion HORIZONTAL
+        -> Recibe un Objeto Palabra
+        -> Agrega un posicion al objetoPalabra: objeto.posicion(posicion)
+    """
+    len_palara = palabra.longitud
     columna = randint(0, (dim_columna -len_palabra))
     fila = randint(0,dim_fila-1)
-    return(fila, columna)
+    palabra.posicion((fila, columna))
 
 
-def generarPosicionVertical(len_palabra, dim_fila, dim_columna):
+def generarPosicionVertical(palabra, dim_fila, dim_columna):
+    """
+        Funcion que genera la posicion de una palabra, para una grilla de Distribucion VERTICAL
+        -> Recibe un Objeto Palabra
+        -> Agrega un posicion al objetoPalabra: objeto.posicion(posicion)
+    """
+    len_palara = palabra.longitud
     columna = randint(0, dim_columna -1)
     fila = randint(0,dim_fila-(len_palabra))
-    return(fila, columna)
+    palabra.posicion((fila,columna))
 
-# lista = ["ver","ser","reie","holamucndo"]
-# a = generarPosicionHorizontal(9, 9, 4)
-# print(a)
 
 def diccionarioPalabrasHorizontal(lista_palabras):
     """
-        Retorna una estructura de tipo dict: diccionario ={obj_palabra:(fila, columna)}, para ubicar la palabra HORIZONTALMENTE
+        -> Recibe una lista con objPalabra
+        -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion HORIZONTAL
     """
-    diccionario_palabras = dict()
-    lista_columna_asignadas = list(diccionario_palabras.values())
-    fila, columna = dimensionGrillaHorizontal(lista_palabras)
+    lista_palabras_posicion = []
+    fila, columna =  dimensionGrillaHorizontal(lista_palabras)
+    lista_posiciones = []
     for palabra in lista_palabras:
-        #len_palabra = len(palabra)
-        len_palabra = len(palabra)
-        posicion_palabra =generarPosicionHorizontal(len_palabra, fila, columna)
-        while(posicion_palabra[0] in lista_columna_asignadas):
-            posicion_palabra = generarPosicionHorizontal(len_palabra, fila, columna)
-        lista_columna_asignadas.append(posicion_palabra[0])
-        diccionario_palabras[palabra]=posicion_palabra
-    return diccionario_palabras
+        posicion_palabra = generarPosicionHorizontal(palabra, fila, columna)
+        while palabra.posicion()[0] in lista_posiciones:
+            posicion_palabra = generarPosicionHorizontal(palabra, fila, columna)
+        lista_posicion.append(posicion_palabra[0])
+        lista_palabras_posicion.append(palabra)
+    return lista_palabras_posicion
 
 def diccionarioPalabrasVertical(lista_palabras):
     """
-        Retorna una estructura de tipo dict: diccionario ={obj_palabra:(fila, columna)}, para ubicar la palabra VERTICALMENTE
+        -> Recibe una lista con objPalabra
+        -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion VERTICAL
     """
-    diccionario_palabras = dict()
-    lista_fila_asignadas = list(diccionario_palabras.values())
+    lista_palabras_posicion =[]
     fila, columna = dimensionGrillaVertical(lista_palabras)
+    lista_posicion =[]
     for palabra in lista_palabras:
-        len_palabra = len(palabra)
-        posicion_palabra =generarPosicionVertical(len_palabra, fila, columna)
-        while(posicion_palabra[1] in lista_fila_asignadas):
-            posicion_palabra = generarPosicionVertical(len_palabra, fila, columna)
-        lista_fila_asignadas.append(posicion_palabra[1])
-        diccionario_palabras[palabra]=posicion_palabra
-    return diccionario_palabras
+        posicion_palabra = generarPosicionVertical(palabra, fila, columna)
+        while(palabra.posicion()[0] in lista_posicion):
+            posicion_palabra = generarPosicionVertical(palabra, fila, columna)
+        lista_posicion.append(posicion_palabra[1])
+        lista_palabras_posicion.append(palabra)
+    return lista_palabras_posicion
 
-def palabras_horizontal(diccionario):
-    dic_palabras = OrderedDict()
-    lista_items = diccionario.items()
-    lista_ordenada = sorted(lista_items, key = lambda x : x[1][0])
-    for elemento in lista_ordenada:
-        dic_palabras[elemento[0]]=elemento[1]
-    return dic_palabras
+def palabras_ordenadas_horizontal(lista_palabras):
+    """
+        -> Entrada lista de Objetos Palabras, cargadas con su posicion en una Grilla
+        -> Retorna lista ordenada de  objetos Palabras, respecto a su posicion en FILA
+    """
+    lista_palabras_posicion = palabras_ordenadas_horizontal(lista_palabras)
+    lista_ordenada = = sorted(lista_palabras_posicion, key = lambda palabra: palabra.posicion()[0])
+    return lista_ordenada
 
-def palabras_vertical(diccionario):
-    dic_palabras =OrderedDict()
-    lista_items = diccionario.items()
-    lista_ordenada = sorted(lista_items, key = lambda x : x[1][1])
-    for elemento in lista_ordenada:
-        dic_palabras[elemento[0]]=elemento[1]
-    return dic_palabras
-
-lista_palabras = ["ver", "correr", "comer", "carro", "celular", " nuevo"]
-# print(dimensionGrillaHorizontal(lista_palabras))
-# print(dimensionGrillaVertical(lista_palabras))
-# print(generarPosicionHorizontal(len("celular"),6,7))
-# print(generarPosicionVertical(len("celular"),7,6))
-# print(diccionarioPalabrasHorizontal(lista_palabras))
-# print(diccionarioPalabrasVertical(lista_palabras))
-diccionario =diccionarioPalabrasVertical(lista_palabras)
-print(palabras_horizontal(diccionario))
-print(palabras_vertical(diccionario))
-
-od = OrderedDict()
-od['a'] = (1,4)
-od['b'] = (2,4)
-od['c'] = (3,1)
-od['d'] = (4,7)
-print(od['d'][1])
+def palabras_ordenadas_vertical(diccionario):
+    """
+        -> Entrada lista de Objetos Palabras, cargadas con su posicion en una Grilla
+        -> Retorna lista ordenada de  objetos Palabras, respecto a su posicion en COLUMNA
+    """
+    lista_palabras_posicion = palabras_ordenadas_vertical(lista_palabras)
+    lista_ordenada = = sorted(lista_palabras_posicion, key = lambda palabra: palabra.posicion()[1])
+    return lista_ordenada
