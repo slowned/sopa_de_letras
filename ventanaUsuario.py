@@ -2,9 +2,15 @@ import os
 import string
 import random
 import PySimpleGUI as sg
-from collections import OrderedDict
 from utilidades import *
 
+"""
+Ventana de Usuario
+    -> Muestra:
+                <=> Grilla ( HORIZONTAL / VERTICAL)
+                <=> Ayuda (SI /NO)
+                <=> Verificacion
+"""
 
 def letra_random(mayuscula=False):
     """
@@ -24,56 +30,67 @@ def crear_boton():
     return btn
 
 
-
-def elementos_fila(dim_columna, diccionario_palabras,i):
-
+#_________________________________________________________
+"""
+A continuacion se presentan valores hardcodeados de:
+    verbos, sustantivos, adjetivos
+servira para comenzar a ubicar las palabras en la grilla
+"""
+verbos = ["comimos","correr"]
+sustantivos = ["profesor","niño"]
+adjetivo =  ["amable","enorme"]
+palabra = "correr"
+palabras = OrderedDict()
+palabras["ver"]= (3,2,1)
+palabras["carro"]= (5,1,2)
+palabras["bueno"]=(5,1,3)
+#----------------------------------------------------------
+def elementos_fila(dim_columna, palabra):
     letras_fila = []
-    lista_palabras = list(diccionario_palabras.keys())
     pos_columna = 0
     while pos_columna <= dim_columna:
-        if(pos_columna == diccionario_palabras[lista_palabras[i]][1]):
-            for letra in lista_palabras[i]:
+        if(pos_columna == palabra.posicion()[1]):
+            for letra in palabra.nombre():
                 letras_fila.append(sg.Button(letra))
-            pos_columna+= diccionario_palabras[lista_palabras[i]][0]
+            #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
+            pos_columna +=palabra.longitud()
         else:
             letras_fila.append(sg.Button(letra_random()))
             pos_columna+=1
     return letras_fila
 
-def elementos_columna(dim_fila, diccionario_palabras,i):
 
+def elementos_columna(dim_fila, palabra):
     letra_columna = []
-    lista_palabras = list(diccionario_palabras.keys())
     pos_fila = 0
     while pos_fila <= dim_fila:
-        if(pos_fila == diccionario_palabras[lista_palabras[i]][1]):
-            for letra in lista_palabras[i]:
+        if(pos_fila == palabra.posicion()[1]):
+            for letra in palabra.nombre():
                 letra_columna.append(sg.Button(letra))
-            pos_fila+= diccionario_palabras[lista_palabras[i]][0]
+            pos_fila+= palabra.longitud()
         else:
             letra_columna.append(sg.Button(letra_random()))
             pos_fila+=1
     return letra_columna
 
 
-def generarGrillaHorizontal(dimension_grilla, diccionario_palabras):
+def generarGrillaHorizontal(dimension_grilla, lista_palabras):
     """
         Entrada:
                 Dimension de la grilla: (dim_fila, dim_columna)
-                Diccionario ordenado de palabras : {palabra:(fila, columna)}
+                Lista ordenada de obj Palabras
         Salida: Grilla
     """
     dim_fila, dim_columna = dimension_grilla
-    fila_sopa = []
+    fila_grilla = []
     grilla_sopa_letras = []
-
     for fila in range(dim_fila):
-        fila_sopa = elementos_fila(dim_columna, diccionario_palabras,fila)
-        grilla_sopa_letras.append(fila_sopa)
+        fila_grilla = elementos_fila(dim_columna, lista_palabras[fila])
+        grilla_sopa_letras.append(fila_grilla)
 
     return grilla_sopa_letras
 
-def generarGrillaVertical(dimension_grilla, diccionario_palabras):
+def generarGrillaVertical(dimension_grilla, lista_palabras):
     """
         Entrada:
                 Dimension de la grilla: (dim_fila, dim_columna)
@@ -83,12 +100,24 @@ def generarGrillaVertical(dimension_grilla, diccionario_palabras):
     dim_fila, dim_columna = dimension_grilla
     columna_sopa = []
     grilla_sopa_letras = []
-
     for columna in range(dim_columna):
-        columna_sopa = elementos_columna(dim_fila, diccionario_palabras,columna)
+        columna_sopa = elementos_columna(dim_fila, lista_palabras[columna])
         grilla_sopa_letras.append(columna_sopa)
 
     return grilla_sopa_letras
+
+
+
+
+# VALORES hardcodeados----------------------------
+fila_de_palabras= elementos_fila(5,palabras,0)
+print(fila_de_palabras)
+print("-"*50)
+print("-"*50)
+
+grilla_Horizontal = generarGrillaHorizontal(3,5, palabras)
+print(grilla_Horizontal)
+#----------------------------------------------------
 
 
 layout = [
@@ -98,11 +127,8 @@ layout = [
     [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('------------TABLAAA-------------', size=(35, 1))],
     [sg.Text('_' * 100, size=(70, 1))],
-# [sg.Button('Customized', button_color=('white', 'green')),sg.Button('Customized', button_color=('white', 'green'))]
-    #[create_grilla()],
 ]
-# print(a)
-# print("-"*50)
+
 
 [layout.append(fillaGrilla) for fillaGrilla in  grilla_Horizontal]
 # print(layout)
