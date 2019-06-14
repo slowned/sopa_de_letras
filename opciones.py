@@ -33,6 +33,7 @@ layout = [
     [sg.Text('Oficina')],
     [sg.Text('_' * 100, size=(70, 2))],
     [sg.ReadButton('Jugar')],
+    [sg.Text('_' * 100, size=(70, 2))],
 ]
 
 
@@ -63,7 +64,7 @@ while True:
             generar_reporte(palabra)
 
     if evento == JUGAR:
-        config.seleccionar_palabras(evento)
+        config.seleccionar_palabras(valores)
     if evento is None:
         break
 
