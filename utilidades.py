@@ -1,5 +1,5 @@
-import random
 import string
+import random
 from wiktionaryparser import WiktionaryParser
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from constantes import PALABRAS_TODAS
@@ -21,7 +21,7 @@ class Configuracion():
     """
 
     __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
-    __alfabeto = string.ascii_letters
+    alfabeto = string.ascii_letters
 
     def __init__(self):
         # self.cantidad = cantidad
@@ -52,11 +52,7 @@ class Configuracion():
         cantidad_palabras.update({ADJECTIVE: evento[ADJECTIVE]})
         for key, value in cantidad_palabras.items():
             for i in range(int(value)):
-                self.palabras().append(random.choice(self.palabras_todas[key]))
-
-    @property
-    def alfabeto(self):
-        return self.__alfabeto
+                self.palabras.append(random.choice(self.palabras_todas[key]))
 
 
 
