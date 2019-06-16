@@ -85,6 +85,7 @@ class Configuracion():
     def set_opciones(self, valores):
         """ agarra los opciones seleccionadas y las setea
             a la instancia de configuracion.
+            :valores: opciones seleccionadas por la profesora/alumno
         """
         opciones = {}
         for key, value in valores.items():
@@ -128,7 +129,10 @@ class Validacion():
         pass
 
     @classmethod
-    def juego(palabras_ganar, seleccionadas):
+    def ganar(palabras_ganar, seleccionadas):
+        """ Verifica si las palabras seleccionadas por el jugador
+            coinciden con las palabras elejeridas por la profesora.
+        """
         errores = []
         correctas = []
         for palabra in palabras_ganar:
@@ -174,6 +178,9 @@ class Palabra():
         return self.__tipo
 
     def get_tipo(self):
+        """ Verifica su tipo (adj, sus, verb) consuntando
+            con Pattern
+        """
         parsed = parse(self.nombre)
         parsed = parsed.split('/')
         return parsed[1]
@@ -187,4 +194,3 @@ def generar_reporte(palabra):
     genera reporte de palabras no existentes
     """
     pass
-
