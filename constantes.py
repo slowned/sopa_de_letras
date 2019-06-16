@@ -102,3 +102,11 @@ VALORES = {
     '_tamanio_mayuscula_': False,
     '_tamanio_minuscula_': True,
 }
+
+palabras = {
+    NOUN: [],  # Sustantivo
+    VERB: [],  # Verbo
+    ADJECTIVE: [],  # Adjetivo
+}
+
+cantidad_palabras = {}
