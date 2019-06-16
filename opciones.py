@@ -1,6 +1,11 @@
 import PySimpleGUI as sg
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
-from constantes import TIPO_PALABRAS_CANT, PALABRAS_TODAS
+from constantes import (
+    TIPO_PALABRAS_CANT,
+    AYUDA_COL,
+    DIRECCION_COL,
+    TAMANIO_COL,
+)
 
 from utilidades import *
 
@@ -10,42 +15,30 @@ JUGAR = 'Jugar'
 
 layout = [
     [sg.Text('Configuraciones', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
-    [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('Ingrese una a una las palabras a encontrar')],
     [sg.InputText(), sg.ReadButton('Agregar')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Colores (sustantivos, adjetivos, verbos)')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Ayuda')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Orientacion Vertical/Horizontal')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Cantidad de palabras a mostrar')],
-    [sg.Column(TIPO_PALABRAS_CANT, background_color='#F7F3EC')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Mayuscula/Minuscula')],
-    [sg.Radio('Mayusculas', "caps", default=True), sg.Radio('Minusculas', "caps")],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Tipografia')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Estilo')],
-    [sg.Text('_' * 100, size=(70, 1))],
-    [sg.Text('Oficina')],
+    [sg.Text('Colores (sustantivos, adjetivos, verbos)')],  # Juan
+    [sg.Column(AYUDA_COL)],
+    [sg.Column(DIRECCION_COL)],
+    [sg.Column(TIPO_PALABRAS_CANT)],
+    [sg.Column(TAMANIO_COL)],
     [sg.Text('_' * 100, size=(70, 2))],
+    [sg.Text('Tipografia')],  # TODO
+    [sg.Text('Estilo')],  # TODO
+    [sg.Text('Oficina')],  # TODO
     [sg.ReadButton('Jugar')],
-    [sg.Text('_' * 100, size=(70, 2))],
 ]
 
 
 window = sg.Window("Sopa de Letras").Layout(layout)
 
-palabras = {
-    NOUN: [],  # Sustantivo
-    VERB: [],  # Verbo
-    ADJECTIVE: [],  # Adjetivo
-}
-
-cantidad_palabras = {}
+# palabras = {
+#     NOUN: [],  # Sustantivo
+#     VERB: [],  # Verbo
+#     ADJECTIVE: [],  # Adjetivo
+# }
+# 
+# cantidad_palabras = {}
 
 config = Configuracion()
 
@@ -64,10 +57,11 @@ while True:
             generar_reporte(palabra)
 
     if evento == JUGAR:
-        config.seleccionar_palabras(valores)
+        #config.seleccionar_palabras(valores)
+        config.set_opciones(valores)
+        print(config.__dict__)
+
     if evento is None:
         break
 
-
-print(config.palabras())
 window.Close()
