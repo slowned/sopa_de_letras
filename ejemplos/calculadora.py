@@ -26,12 +26,13 @@ while True:
     if event is None:  # if the X button clicked, just exit      
         break      
     if event == 'Clear':  # clear keys if clear button      
-       keys_entered = ''      
+        keys_entered = ''      
     elif event in '1234567890':  # os.ascii.all()      
-       keys_entered = values['input']  # get what's been entered so far      
-       keys_entered += event  # add the new digit      
+        print(values)
+        keys_entered = values['input']  # get what's been entered so far      
+        keys_entered += event  # add the new digit      
     elif event == 'Submit':      
-       keys_entered = values['input']      
-       window.Element('out').Update(keys_entered)  # output the final string
+        keys_entered = values['input']      
+        window.Element('out').Update(keys_entered)  # output the final string
 
     window.Element('input').Update(keys_entered)  # change the window to reflect current key string
