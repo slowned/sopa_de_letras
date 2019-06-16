@@ -32,14 +32,6 @@ layout = [
 
 window = sg.Window("Sopa de Letras").Layout(layout)
 
-# palabras = {
-#     NOUN: [],  # Sustantivo
-#     VERB: [],  # Verbo
-#     ADJECTIVE: [],  # Adjetivo
-# }
-# 
-# cantidad_palabras = {}
-
 config = Configuracion()
 
 while True:
