@@ -77,6 +77,7 @@ class Configuracion():
         cantidad_palabras.update({VERB: evento[VERB]})
         cantidad_palabras.update({NOUN: evento[NOUN]})
         cantidad_palabras.update({ADJECTIVE: evento[ADJECTIVE]})
+
         for key, value in cantidad_palabras.items():
             for i in range(int(value)):
                 self.palabras.append(random.choice(self.palabras_todas[key]))
