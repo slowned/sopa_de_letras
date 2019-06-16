@@ -1,18 +1,17 @@
-import string
 import random
-from wiktionaryparser import WiktionaryParser
-from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
-from constantes import PALABRAS_TODAS
-
-
 from pattern.es import parse
+from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
+from wiktionaryparser import WiktionaryParser
 
-__all__ = (
+from constantes import ALFABETO, AYUDA, DIRECCION, PALABRAS_TODAS, TAMANIO
+
+
+__all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
     'generar_reporte',
-)
+]
 
 
 class Configuracion():
@@ -21,17 +20,21 @@ class Configuracion():
     """
 
     __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
-    alfabeto = string.ascii_letters
+    alfabeto = ALFABETO
 
     def __init__(self):
         # self.cantidad = cantidad
         self.palabras_juego = []
+        self.__ayuda = ""
+        self.__direccion = ""
+        self.__tamanio = ""
 
     @property
     def palabras_todas(self):
         return self.__palabras_todas
 
     def agregar_palabras(self, palabra):
+        """ Palabras agregadas por la profesora """
         self.__palabras_todas[palabra.tipo].append(palabra)
 
     @property
@@ -40,6 +43,30 @@ class Configuracion():
         lista de objetos(Palabra) de la sopa de letras
         """
         return self.palabras_juego
+
+    @property
+    def ayuda(self):
+        return self.__ayuda
+
+    @ayuda.setter
+    def ayuda(self, ayuda):
+        self.__ayuda = True
+
+    @property
+    def direccion(self):
+        return self.__direccion
+
+    @direccion.setter
+    def direccion(self, direccion):
+        self.__direccion = direccion
+
+    @property
+    def tamanio(self):
+        return self.__tamanio
+
+    @tamanio.setter
+    def tamanio(self, tamanio):
+        self.__tamanio = tamanio
 
     def seleccionar_palabras(self, evento):
         """ llega un diccionario con la cantidad de palabras
@@ -54,6 +81,19 @@ class Configuracion():
             for i in range(int(value)):
                 self.palabras.append(random.choice(self.palabras_todas[key]))
 
+    def set_opciones(self, valores):
+        """ agarra los opciones seleccionadas y las setea
+            a la instancia de configuracion.
+        """
+        opciones = {}
+        for key, value in valores.items():
+            if value is True:
+                key = key.split('_')[1]
+                opciones.update({key: value})
+
+        self.tamanio = opciones[TAMANIO]
+        self.direccion = opciones[DIRECCION]
+        self.ayuda = opciones[AYUDA]
 
 
 class Validacion():
@@ -74,7 +114,6 @@ class Validacion():
         except:
             print("Error inesperado al consultar con wikcionario")
 
-
         return False, False
 
     @classmethod
@@ -86,6 +125,21 @@ class Validacion():
             ------------------
         """
         pass
+
+    @classmethod
+    def juego(palabras_ganar, seleccionadas):
+        errores = []
+        correctas = []
+        for palabra in palabras_ganar:
+            if palabra.tipo in seleccionadas[palabra.tipo]:
+                correctas.append(palabra)
+            else:
+                errores.append(palabra)
+
+
+def generar_palabras(palabras):
+    for nombre in palabras:
+        Palabra(nombre, "definicion")
 
 
 class Palabra():
