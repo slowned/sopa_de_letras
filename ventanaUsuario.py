@@ -45,39 +45,46 @@ servira para comenzar a ubicar las palabras en la grilla
 # palabras["bueno"]=(5,1,3)
 #----------------------------------------------------------
 
-def elementos_fila(dim_columna,fila_palabra, palabra):
+def elementos_fila(dim_columna, fila_palabra, palabra):
     letras_fila = []
     pos_columna = 0
     add = 0
-    while pos_columna <= dim_columna:
-        key_letra = dim_columna * fila_palabra + add
-        if(pos_columna == palabra.posicion[1]):
+    indice = dim_columna * fila_palabra
+    while pos_columna < dim_columna:
+        if pos_columna == palabra.posicion[1]:
             for letra in palabra.nombre:
-                letras_fila.append(sg.Button(letra, key=key_letra))
+                key_letra = indice + add
+                key = str(key_letra)
+                letras_fila.append(sg.Button(letra, key=key))
+                add += 1
             #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
-            pos_columna +=palabra.longitud
-            add+=1
+            pos_columna += palabra.longitud
         else:
-            letras_fila.append(sg.Button(letra_random(),key=key_letra))
-            pos_columna+=1
-            add+=1
+            key_letra = indice + add
+            key = str(key_letra)
+            letras_fila.append(sg.Button(letra_random(), key=key))
+            pos_columna += 1
+            add += 1
     return letras_fila
 
 
-def elementos_columna(dim_fila,columna_palabra palabra):
+def elementos_columna(dim_fila, columna_palabra, palabra):
     letra_columna = []
     pos_fila = 0
     add=0
-    while pos_fila <= dim_fila:
+    while pos_fila < dim_fila:
         key_letra = dim_columna * fila_palabra + add
+        key = str(key_letra)
         if(pos_fila == palabra.posicion[1]):
             for letra in palabra.nombre:
-                letra_columna.append(sg.Button(letra), key=key_letra)
-                add+=1
+                key_letra = dim_columna * fila_palabra + add
+                key = str(key_letra)
+                letra_columna.append(sg.Button(letra, key=key))
+                add += 1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random(), key=key_letra))
-            pos_fila+=1
+            letra_columna.append(sg.Button(letra_random(), key=key))
+            pos_fila += 1
             add+=1
     return letra_columna
 
