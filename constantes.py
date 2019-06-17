@@ -6,6 +6,22 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 
 ALFABETO = string.ascii_letters
 MAXIMO_PALABRA = [x for x in range(10)]
+COL_BOTONES_TIPOS = [
+    [sg.Button("SUSTANTIVO", button_color=('white', '#311380'), key=NOUN),
+     sg.Button("VERBO", button_color=('white', '#311380'), key=VERB),
+     sg.Button("ADJETIVO", button_color=('white', '#311380'), key=ADJECTIVE),
+    ],
+]
+
+LAYOUT_AYUDA = []
+LAYOUT_JUEGO = [
+    [sg.Text('Sopa de letras', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
+    [sg.Column(COL_BOTONES_TIPOS)],
+]
+
+
+
+
 
 # ------- Elementos de opciones -------
 
@@ -44,7 +60,6 @@ TIPO_PALABRAS_CANT = [
         sg.Spin(values=MAXIMO_PALABRA, initial_value='0', key=ADJECTIVE)],
     [sg.Text('Sustantivos: '),
         sg.Spin(values=MAXIMO_PALABRA, initial_value='0', key=NOUN)],
-    [sg.Text('Total:')],
 ]
 
 # -------- Fin Elementos Opciones --------
