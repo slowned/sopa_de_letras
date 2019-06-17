@@ -56,35 +56,36 @@ class Juego():
             cls.dibujar(grilla, config)
 
         ventana = sg.Window('Sopa le letras').Layout(cls.layout)
+        rango = range(dimension_grilla[0]*dimension_grilla[1])
+
+        config.keys = [str(e) for e in rango]
+
+        generando = False
 
         while True:
             evento, valores = ventana.Read()
             if evento is None:
                 break
             if evento in cls.lista_key_palabras:
-                tipo_palabra = evento
-                palabra = ''
                 lista_key_disable = cls.lista_key_palabras[:]
                 lista_key_disable.remove(evento)
                 for elemento in lista_key_disable:
                     ventana.Element(elemento).Update(disabled=True)
-            elif evento in config.keys:
+                generando = True
+                palabra = ''
+                tipo_palabra = evento
+
+            if evento in config.keys and generando:
                 letra = ventana.Element(evento).ButtonText
                 palabra += letra
-                ventana.Element(evento).Update(button_color=(('white', ('red','blue')[True])))
+                ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
             elif evento == '_agregar_':
                 cls.palabras_juego[tipo_palabra].append(palabra)
                 palabra = ''
                 for elemento in lista_key_disable:
                     ventana.Element(elemento).Update(disabled=False)
             elif evento == '_verificar_':
-                Validacion.ganar(conf.palabras, cls.palabras_juego)
-
-
-
-
-
-
+                Validacion.ganar(config.palabras, cls.palabras_juego)
 
         ventana.Close()
 
