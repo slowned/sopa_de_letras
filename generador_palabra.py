@@ -54,10 +54,8 @@ while True:
         palabra = ''
         tipo_palabra = event
     elif event in ALFABETO:
-        print(event)
         letra = ventana.Element(event).ButtonText
         palabra += letra
-        print("la palabra es: {}".format(palabra))
     elif event == '__agregar__':
         palabras_juego[tipo_palabra].append(palabra)
         palabra = ''
