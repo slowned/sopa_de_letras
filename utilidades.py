@@ -3,8 +3,7 @@ from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 
-from constantes import ALFABETO, AYUDA, DIRECCION, PALABRAS_TODAS, TAMANIO
-
+from constantes import ALFABETO
 
 __all__ = [
     'Configuracion',
@@ -14,20 +13,12 @@ __all__ = [
 ]
 
 
-class Configuracion():
-    """
-    clase de configuracion para la sopa de letras
-    """
-
-    __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
-    alfabeto = ALFABETO
-
-    def __init__(self):
-        # self.cantidad = cantidad
-        self.palabras_juego = []
-        self.__ayuda = ""
-        self.__direccion = ""
-        self.__tamanio = ""
+class Palabra():
+    def __init__(self, nombre, definicion):
+        self.__nombre = nombre
+        self.__definicion = definicion
+        self.longitud = len(self.nombre)
+        self.__tipo = self.get_tipo()
         self.__posicion = ""
 
     @property
@@ -37,6 +28,107 @@ class Configuracion():
     @posicion.setter
     def posicion(self, posicion):
         self.__posicion = posicion
+
+    def __str__(self):
+        return self.__nombre
+
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
+
+    @property
+    def definicion(self):
+        return self.__definicion
+
+    @definicion.setter
+    def definicion(self, definicion):
+        self.__definicion = definicion
+
+    @property
+    def tipo(self):
+        return self.__tipo
+
+    def get_tipo(self):
+        """ Verifica su tipo (adj, sus, verb) consuntando
+            con Pattern
+        """
+        parsed = parse(self.nombre)
+        parsed = parsed.split('/')
+        return parsed[1]
+
+    def posicion(self):
+        pass
+
+
+def generar_reporte(palabra):
+    """
+    genera reporte de palabras no existentes
+    """
+    pass
+
+
+VERBOS = [
+    'jugar',
+    'llamar',
+    'saltar',
+    'correr',
+    'buscar',
+    'comer',
+    'ver',
+    'hablar',
+]
+
+ADJETIVOS = [
+    'afortunado',
+    'alto',
+    'negro',
+    'obsecuente',
+    'paciente',
+    'extremo',
+    'famoso',
+    'inteligente',
+]
+
+SUSTANTIVOS = [
+    'animal',
+    'libro',
+    'aire',
+    'esfera',
+    'planta',
+    'programa',
+    'guitarra',
+    'idea',
+    'trabajo',
+    'ciruela',
+    'vaso',
+]
+
+
+VERBOS = [Palabra(sus, 'def') for sus in VERBOS]
+SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
+ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
+
+PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
+
+class Configuracion():
+    """
+    clase de configuracion para la sopa de letras
+    """
+
+    # __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
+    __palabras_todas = PALABRAS_TODAS
+    alfabeto = ALFABETO
+
+    def __init__(self):
+        # self.cantidad = cantidad
+        self.palabras_juego = []
+        self.__ayuda = ""
+        self.__direccion = ""
+        self.__tamanio = ""
 
     @property
     def palabras_todas(self):
@@ -96,15 +188,34 @@ class Configuracion():
             a la instancia de configuracion.
             :valores: opciones seleccionadas por la profesora/alumno
         """
+        # valores = {
+        #     '_ayuda_si_': True,
+        #     '_ayuda_no_': False,
+        #     '_direccion_vertical_': True,
+        #     '_direccion_orizontal_': False,
+        #     '_tamanio_mayuscula_': True,
+        #     '_tamanio_minuscula_': False,
+        # } 
+
         opciones = {}
         for key, value in valores.items():
             if value is True:
-                key = key.split('_')[1]
                 opciones.update({key: value})
 
-        self.tamanio = opciones[TAMANIO]
-        self.direccion = opciones[DIRECCION]
-        self.ayuda = opciones[AYUDA]
+        if '_ayuda_si_' in opciones.keys():
+            self.ayuda = True
+        else:
+            self.ayuda = False
+
+        if '_direccion_vertical_' in opciones.keys():
+            self.direccion = True
+        else:
+            self.direccion = False
+
+        if '_tamanio_minuscula_' in opciones.keys():
+            self.tamanio = True
+        else:
+            self.tamanio = False
 
 
 class Validacion():
@@ -156,50 +267,3 @@ def generar_palabras(palabras):
         Palabra(nombre, "definicion")
 
 
-class Palabra():
-    def __init__(self, nombre, definicion):
-        self.__nombre = nombre
-        self.__definicion = definicion
-        self.longitud = len(self.nombre)
-        self.__tipo = self.get_tipo()
-
-    def __str__(self):
-        return self.__nombre
-
-    @property
-    def nombre(self):
-        return self.__nombre
-
-    @nombre.setter
-    def nombre(self, nombre):
-        self.__nombre = nombre
-
-    @property
-    def definicion(self):
-        return self.__definicion
-
-    @definicion.setter
-    def definicion(self, definicion):
-        self.__definicion = definicion
-
-    @property
-    def tipo(self):
-        return self.__tipo
-
-    def get_tipo(self):
-        """ Verifica su tipo (adj, sus, verb) consuntando
-            con Pattern
-        """
-        parsed = parse(self.nombre)
-        parsed = parsed.split('/')
-        return parsed[1]
-
-    def posicion(self):
-        pass
-
-
-def generar_reporte(palabra):
-    """
-    genera reporte de palabras no existentes
-    """
-    pass
