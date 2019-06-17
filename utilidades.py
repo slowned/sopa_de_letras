@@ -1,4 +1,5 @@
 import random
+import PySimpleGUI as sg
 from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
@@ -129,6 +130,15 @@ class Configuracion():
         self.__ayuda = ""
         self.__direccion = ""
         self.__tamanio = ""
+        self.__keys = ""
+
+    @property
+    def keys(self):
+        return self.__keys
+
+    @keys.setter
+    def keys(self, keys):
+        self.__keys = keys
 
     @property
     def palabras_todas(self):
@@ -249,17 +259,39 @@ class Validacion():
         pass
 
     @classmethod
-    def ganar(palabras_ganar, seleccionadas):
+    def ganar(cls, palabras_ganar, seleccionadas):
         """ Verifica si las palabras seleccionadas por el jugador
             coinciden con las palabras elejeridas por la profesora.
         """
+        print(palabras_ganar)  # lista Palabras
+        print(seleccionadas)  # { ver: [], susb: [], adj: [] } 
+
+        faltantes = [palabra.nombre for palabra in palabras_ganar]
+
+        bien = 0
         errores = []
         correctas = []
         for palabra in palabras_ganar:
             if palabra.tipo in seleccionadas[palabra.tipo]:
-                correctas.append(palabra)
-            else:
-                errores.append(palabra)
+                bien += 1
+                correctas.append(palabra.nombre)
+                faltantes.remove(palabra)
+
+        if len(palabras_ganar) == bien:
+            sg.Popup('GANASTE',
+                     'Felicitaciones has ganado!!')
+        else:
+            sg.Popup(
+                'perdiste',
+                'Lo siento, pero perdiste',
+                'palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),
+                'palabras correctas: {}'.format(correctas),
+                'palabras restantes: {}'.format(faltantes)
+            )
+
+
+        print(correctas)
+        print(errores)
 
 
 def generar_palabras(palabras):
