@@ -38,22 +38,25 @@ while True:
     evento, valores = window.Read()
     if evento == 'Agregar':
         palabra = valores.get(2, None)  # en la pos 2 esta el valor del input
-        palabra, definicion = Validacion.validar_con_wikcionario(palabra)
-        if palabra:
-            palabra = Palabra(palabra, definicion)
-            config.agregar_palabras(palabra)
+        #palabra, definicion = Validacion.validar_con_wikcionario(palabra)
+        #if palabra:
+        #    palabra = Palabra(palabra, definicion)
+        #    config.agregar_palabras(palabra)
             # el tipo de la palabra lo genera la palabra
             # verificar con patters
-        else:
-            # falta logica de generar reporte
-            generar_reporte(palabra)
+        # else:
+        #     # falta logica de generar reporte
+        #     generar_reporte(palabra)
 
     if evento == JUGAR:
         #config.seleccionar_palabras(valores)
         config.set_opciones(valores)
+        valores.update({'opciones': config})
+        print(valores)
         print(config.__dict__)
 
     if evento is None:
         break
+
 
 window.Close()
