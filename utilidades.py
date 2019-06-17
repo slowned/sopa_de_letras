@@ -151,7 +151,7 @@ class Configuracion():
 
     @ayuda.setter
     def ayuda(self, ayuda):
-        self.__ayuda = True
+        self.__ayuda = ayuda
 
     @property
     def direccion(self):
@@ -204,7 +204,7 @@ class Configuracion():
 
         if '_ayuda_si_' in opciones.keys():
             self.ayuda = True
-        else:
+        elif '_ayuda_no_' in opciones.keys():
             self.ayuda = False
 
         if '_direccion_vertical_' in opciones.keys():
