@@ -28,6 +28,15 @@ class Configuracion():
         self.__ayuda = ""
         self.__direccion = ""
         self.__tamanio = ""
+        self.__posicion = ""
+
+    @property
+    def posicion(self):
+        return self.__posicion
+
+    @posicion.setter
+    def posicion(self, posicion):
+        self.__posicion = posicion
 
     @property
     def palabras_todas(self):
