@@ -19,12 +19,12 @@ AYUDA_COL = [
 ]
 
 DIRECCION = "direccion"
-VERTICAL = "_direccion_vertical_"
-ORIZONTAL = "_direccion_orizontal_"
+VERTICAL = "_vertical_si"
+HORIZONTAL = "_vertical_no"
 DIRECCION_COL = [
     [sg.Text('Orientacion Vertical/Horizontal')],
     [sg.Radio('VERTICAL', "DIRECCION", default=True, key=VERTICAL),
-        sg.Radio('ORIZONTAL', "DIRECCION", key=ORIZONTAL)],
+        sg.Radio('HORIZONTAL', "DIRECCION", key=HORIZONTAL)],
 ]
 
 TAMANIO = "tamanio"
@@ -86,6 +86,11 @@ SUSTANTIVOS = [
     'vaso',
 ]
 
+from utilidades import Palabra
+
+VERBOS = [Palabra(sus, 'def') for sus in VERBOS]
+SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
+ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
 
 PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
 
