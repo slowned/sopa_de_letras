@@ -23,7 +23,7 @@ layout = [
     [sg.Column(DIRECCION_COL)],
     [sg.Column(TIPO_PALABRAS_CANT)],
     [sg.Column(TAMANIO_COL)],
-    [sg.Text('_' * 100, size=(70, 2))],
+    [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('Tipografia')],  # TODO
     [sg.Text('Estilo')],  # TODO
     [sg.Text('Oficina')],  # TODO
