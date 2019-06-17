@@ -45,32 +45,40 @@ servira para comenzar a ubicar las palabras en la grilla
 # palabras["bueno"]=(5,1,3)
 #----------------------------------------------------------
 
-def elementos_fila(dim_columna, palabra):
+def elementos_fila(dim_columna,fila_palabra, palabra):
     letras_fila = []
     pos_columna = 0
+    add = 0
     while pos_columna <= dim_columna:
+        key_letra = dim_columna * fila_palabra + add
         if(pos_columna == palabra.posicion[1]):
             for letra in palabra.nombre:
-                letras_fila.append(sg.Button(letra))
+                letras_fila.append(sg.Button(letra, key=key_letra))
             #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
             pos_columna +=palabra.longitud
+            add+=1
         else:
-            letras_fila.append(sg.Button(letra_random()))
+            letras_fila.append(sg.Button(letra_random(),key=key_letra))
             pos_columna+=1
+            add+=1
     return letras_fila
 
 
-def elementos_columna(dim_fila, palabra):
+def elementos_columna(dim_fila,columna_palabra palabra):
     letra_columna = []
     pos_fila = 0
+    add=0
     while pos_fila <= dim_fila:
+        key_letra = dim_columna * fila_palabra + add
         if(pos_fila == palabra.posicion[1]):
             for letra in palabra.nombre:
-                letra_columna.append(sg.Button(letra))
+                letra_columna.append(sg.Button(letra), key=key_letra)
+                add+=1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random()))
+            letra_columna.append(sg.Button(letra_random(), key=key_letra))
             pos_fila+=1
+            add+=1
     return letra_columna
 
 
@@ -85,7 +93,7 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras):
     fila_grilla = []
     grilla_sopa_letras = []
     for fila in range(dim_fila):
-        fila_grilla = elementos_fila(dim_columna, lista_palabras[fila])
+        fila_grilla = elementos_fila(dim_columna,fila, lista_palabras[fila])
         grilla_sopa_letras.append(fila_grilla)
 
     return grilla_sopa_letras
@@ -101,7 +109,7 @@ def generarGrillaVertical(dimension_grilla, lista_palabras):
     columna_sopa = []
     grilla_sopa_letras = []
     for columna in range(dim_columna):
-        columna_sopa = elementos_columna(dim_fila, lista_palabras[columna])
+        columna_sopa = elementos_columna(dim_fila,columna, lista_palabras[columna])
         grilla_sopa_letras.append(columna_sopa)
 
     return grilla_sopa_letras
