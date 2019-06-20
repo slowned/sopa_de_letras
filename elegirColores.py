@@ -31,31 +31,3 @@ def paleta_colores():
             if(event in colors):
                 window.Close()
                 return(event)
-     
-#layout para elegir colores a los diferentes tipos de palabras!
-
-dict_color = {}        
-
-layout =[[sg.Button('Verbo',key='verb'), sg.Button('Sustantivo',key='noun'), sg.Button('Adjetivo',key='adjetive')]]
-
-window = sg.Window('Color', grab_anywhere=False, font=('any 9')).Layout(layout)
-
-# -- Event loop --
-while True:
-    event, values = window.Read()
-    print(event)
-    if event is None:
-        break
-    elif event == 'verb':
-        color_select = paleta_colores()
-        dict_color['Verbo']=color_select
-        print(dict_color)
-    elif event == 'noun':
-        color_select = paleta_colores()
-        dict_color['Sustantivo']=color_select
-        print(dict_color)
-    elif event == 'adjetive':
-        color_select = paleta_colores()
-        dict_color['Adjetivo']=color_select
-        print(dict_color)
-    window.Element(event).Update(button_color=(('black',('blue',color_select)[True])))

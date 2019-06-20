@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import elegirColores as ec
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from constantes import (
     TIPO_PALABRAS_CANT,
@@ -18,7 +19,8 @@ layout = [
     [sg.Text('Configuraciones', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
     [sg.Text('Ingrese una a una las palabras a encontrar')],
     [sg.InputText(), sg.ReadButton('Agregar')],
-    [sg.Text('Colores (sustantivos, adjetivos, verbos)')],  # Juan
+    [sg.Text('Elegir los colores para los tipos de palabras')],
+    [sg.Button('Verbo',key='verb'), sg.Button('Sustantivo',key='noun'), sg.Button('Adjetivo',key='adjetive')],
     [sg.Column(AYUDA_COL)],
     [sg.Column(DIRECCION_COL)],
     [sg.Column(TIPO_PALABRAS_CANT)],
@@ -35,6 +37,8 @@ window = sg.Window("Sopa de Letras").Layout(layout)
 
 config = Configuracion()
 
+dict_color = {}
+
 while True:
     evento, valores = window.Read()
     if evento == 'Agregar':
@@ -46,16 +50,28 @@ while True:
         else:
             # falta logica de generar reporte
             generar_reporte(palabra)
-
-    if evento == JUGAR:
+    elif evento == 'verb':
+        color_select = ec.paleta_colores()
+        dict_color['Verbo']=color_select
+        print(dict_color)
+    elif evento == 'noun':
+        color_select = ec.paleta_colores()
+        dict_color['Sustantivo']=color_select
+        print(dict_color)
+    elif evento == 'adjetive':
+        color_select = ec.paleta_colores()
+        dict_color['Adjetivo']=color_select
+        print(dict_color)
+    elif evento == JUGAR:
         config.seleccionar_palabras(valores)
         config.set_opciones(valores)
         valores.update({'opciones': config})
         window.Close()
         Juego.jugar(valores, config)
-
-    if evento is None:
+    elif evento is None:
         break
+    window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+
 
 
 window.Close()
