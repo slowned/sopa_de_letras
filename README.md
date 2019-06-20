@@ -21,7 +21,7 @@ python3 opciones.py
 ## Tener en cuenta
 
   Para el correcto funcionamiento del juego **sopa de letras** se deben tener todos los requerimientos instalados.
-  Recomendamos trabajar con un entorno viertual activarlo e instalar los requerimintos que se encuentran en el archivo
+  Recomendamos trabajar con un entorno virtual activarlo e instalar los requerimintos que se encuentran en el archivo
 requerimintos.txt
 
 
