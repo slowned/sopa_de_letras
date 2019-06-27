@@ -44,30 +44,33 @@ while True:
     if evento == 'Agregar':
         palabra = valores.get(2, None)  # en la pos 2 esta el valor del input
         palabra, definicion = Validacion.validar_con_wikcionario(palabra)
+
         if palabra:
             palabra = Palabra(palabra, definicion)
             config.agregar_palabras(palabra)
         else:
             # falta logica de generar reporte
-            generar_reporte(palabra)
+            Validacion.generar_reporte(palabra)
+
     elif evento == 'verb':
         color_select = ec.paleta_colores()
-        dict_color['Verbo']=color_select
-        print(dict_color)
+        config.agregar_color(NOUN, color_select)
+
     elif evento == 'noun':
         color_select = ec.paleta_colores()
-        dict_color['Sustantivo']=color_select
-        print(dict_color)
+        config.agregar_color(NOUN, color_select)
+
     elif evento == 'adjetive':
         color_select = ec.paleta_colores()
-        dict_color['Adjetivo']=color_select
-        print(dict_color)
+        config.agregar_color(ADJECTIVE, color_select)
+
     elif evento == JUGAR:
         config.seleccionar_palabras(valores)
         config.set_opciones(valores)
         valores.update({'opciones': config})
         window.Close()
         Juego.jugar(valores, config)
+
     elif evento is None:
         break
     window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))

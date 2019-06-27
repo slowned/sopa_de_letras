@@ -4,13 +4,12 @@ from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 
-from constantes import ALFABETO
+from constantes import ALFABETO, PALABRAS_TODAS
 
 __all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
-    'generar_reporte',
 ]
 
 
@@ -61,67 +60,14 @@ class Palabra():
         parsed = parsed.split('/')
         return parsed[1]
 
-    def posicion(self):
-        pass
-
-
-def generar_reporte(palabra):
-    """
-    genera reporte de palabras no existentes
-    """
-    pass
-
-
-VERBOS = [
-    'jugar',
-    'llamar',
-    'saltar',
-    'correr',
-    'buscar',
-    'comer',
-    'ver',
-    'hablar',
-]
-
-ADJETIVOS = [
-    'afortunado',
-    'alto',
-    'negro',
-    'obsecuente',
-    'paciente',
-    'extremo',
-    'famoso',
-    'inteligente',
-]
-
-SUSTANTIVOS = [
-    'animal',
-    'libro',
-    'aire',
-    'esfera',
-    'planta',
-    'programa',
-    'guitarra',
-    'idea',
-    'trabajo',
-    'ciruela',
-    'vaso',
-]
-
-
-VERBOS = [Palabra(sus, 'def') for sus in VERBOS]
-SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
-ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
-
-PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
 
 class Configuracion():
     """
     clase de configuracion para la sopa de letras
     """
 
-    # __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
-    __palabras_todas = PALABRAS_TODAS
+    __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
+    # __palabras_todas = PALABRAS_TODAS
     alfabeto = ALFABETO
 
     def __init__(self):
@@ -131,6 +77,7 @@ class Configuracion():
         self.__direccion = ""
         self.__tamanio = ""
         self.__keys = ""
+        self.colores = {}
 
     @property
     def keys(self):
@@ -227,9 +174,21 @@ class Configuracion():
         else:
             self.tamanio = False
 
+    def agregar_color(self, tipo, color):
+        if color in self.color.values():
+            #TODO: pop up NO PUEDE REPETIR LOS COLORES
+        self.color.update({tipo:color})
+
 
 class Validacion():
     wiki = WiktionaryParser
+
+    @classmethod
+    def generar_reporte(palabra):
+        """
+        genera reporte de palabras no existentes
+        """
+        pass
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
@@ -269,7 +228,6 @@ class Validacion():
         faltantes = [palabra.nombre for palabra in palabras_ganar]
 
         bien = 0
-        errores = []
         correctas = []
         for palabra in palabras_ganar:
             if palabra.tipo in seleccionadas[palabra.tipo]:
@@ -289,9 +247,11 @@ class Validacion():
                 'palabras restantes: {}'.format(faltantes)
             )
 
-
-        print(correctas)
-        print(errores)
+    @classmethod
+    def verificar_colores(cls, dict_colores):
+        if len(dict_colores) == 3:
+            return True
+        return False
 
 
 def generar_palabras(palabras):
