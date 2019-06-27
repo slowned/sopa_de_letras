@@ -28,6 +28,11 @@ def generar_layout_ayuda(config):
     layout.append(sg.Listbox(valores, size=(50, 5)))
     return layout
 
+def layout_instructivo():
+    #TODO: popUp con instrucciones de Juego
+        #
+    pass
+
 
 class Juego():
 
@@ -37,10 +42,12 @@ class Juego():
 
     @classmethod
     def dibujar(cls, grilla, config):
+        cls.layout.append([sg.Submit("Instruccion de Juego", key= "_instrcciones_")])
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
         if config.ayuda:
             [cls.layout.append(generar_layout_ayuda(config))]
         cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_")])
+
 
     @classmethod
     def jugar(cls, valores, config):
@@ -74,8 +81,7 @@ class Juego():
                 generando = True
                 palabra = ''
                 tipo_palabra = evento
-
-            if evento in config.keys and generando:
+            elif evento in config.keys and generando:
                 letra = ventana.Element(evento).ButtonText
                 palabra += letra
                 ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
@@ -86,7 +92,6 @@ class Juego():
                     ventana.Element(elemento).Update(disabled=False)
             elif evento == '_verificar_':
                 Validacion.ganar(config.palabras, cls.palabras_juego)
-
+            elif evento == '_instrcciones_':
+                layout_instructivo()
         ventana.Close()
-
-
