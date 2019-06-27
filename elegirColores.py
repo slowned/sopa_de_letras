@@ -1,7 +1,7 @@
-import PySimpleGUI as sg 
+import PySimpleGUI as sg
 
 def paleta_colores():
-    
+
     colors = ['BLUE', 'GREEN2', 'RED1', 'YELLOW', 'CYAN', 'GREY', 'MAGENTA','DARKORANGE1','BLACK']
 
     sg.SetOptions(button_element_size=(12,1), element_padding=(0,0), auto_size_buttons=False, border_width=0)
@@ -25,6 +25,8 @@ def paleta_colores():
     # -- Event loop --
     while True:
         event,values = window.Read()
+        print(event)
+        print(values)
         if event is None:
             break
         else:

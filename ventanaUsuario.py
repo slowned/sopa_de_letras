@@ -29,22 +29,6 @@ def crear_boton():
     btn = [sg.Button(letra_random(), button_color=('white', 'green'))]
     return btn
 
-
-#_________________________________________________________
-"""
-A continuacion se presentan valores hardcodeados de:
-    verbos, sustantivos, adjetivos
-servira para comenzar a ubicar las palabras en la grilla
-"""
-# verbos = ["comimos","correr"]
-# sustantivos = ["profesor","niño"]
-# adjetivo =  ["amable","enorme"]
-# palabra = "correr"
-# palabras["ver"]= (3,2,1)
-# palabras["carro"]= (5,1,2)
-# palabras["bueno"]=(5,1,3)
-#----------------------------------------------------------
-
 def elementos_fila(dim_columna, fila_palabra, palabra):
     letras_fila = []
     pos_columna = 0

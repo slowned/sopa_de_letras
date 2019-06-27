@@ -22,7 +22,6 @@ layout = [
     [sg.Text('Elegir los colores para los tipos de palabras')],
     [sg.Button('Verbo',key='verb'), sg.Button('Sustantivo',key='noun'), sg.Button('Adjetivo',key='adjetive')],
     [sg.Column(AYUDA_COL)],
-    [sg.Column(DIRECCION_COL)],
     [sg.Column(TIPO_PALABRAS_CANT)],
     [sg.Column(TAMANIO_COL)],
     [sg.Text('_' * 100, size=(70, 1))],
@@ -42,14 +41,17 @@ dict_color = {}
 while True:
     evento, valores = window.Read()
     if evento == 'Agregar':
-        palabra = valores.get(2, None)  # en la pos 2 esta el valor del input
+        palabra = valores.get(0, None)
+        #TODO: Avisar el usuario que debe ingresar una palabra
         palabra, definicion = Validacion.validar_con_wikcionario(palabra)
         if palabra:
             palabra = Palabra(palabra, definicion)
             config.agregar_palabras(palabra)
         else:
-            # falta logica de generar reporte
-            generar_reporte(palabra)
+            # TODO: generar reporte txt
+            # TODO: PopUp informando que no se pudo validar la palabra.
+            generar_reporte(palabra) #TODO
+
     elif evento == 'verb':
         color_select = ec.paleta_colores()
         dict_color['Verbo']=color_select
@@ -63,11 +65,20 @@ while True:
         dict_color['Adjetivo']=color_select
         print(dict_color)
     elif evento == JUGAR:
-        config.seleccionar_palabras(valores)
-        config.set_opciones(valores)
-        valores.update({'opciones': config})
-        window.Close()
-        Juego.jugar(valores, config)
+        if Validacion.verificar_colores(dict_color):
+            if Validacion.verificar_cantidad_palabras(valores):
+                config.seleccionar_palabras(valores)
+                config.set_opciones(valores)
+                valores.update({'opciones': config})
+                window.Close()
+                Juego.jugar(valores, config)
+            else:
+                #popUp informando que seleccione una cantidad minima de palabras
+                pass
+        else:
+            #PopUp informando que cargue los colores
+            pass
+
     elif evento is None:
         break
     window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
