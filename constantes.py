@@ -53,7 +53,7 @@ TAMANIO_COL = [
 ]
 
 TIPO_PALABRAS_CANT = [
-    [sg.Text('Cantidad de palabras a mostrar')],
+    [sg.Text('Cantidad de palabras a mostrar (*)')],
     [sg.Text('Verbos: '),
         sg.Spin(values=MAXIMO_PALABRA, initial_value='0', key=VERB)],
     [sg.Text('Adjetivos: '),

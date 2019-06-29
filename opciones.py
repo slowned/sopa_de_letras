@@ -41,18 +41,25 @@ dict_color = {}
 while True:
     evento, valores = window.Read()
     if evento == 'Agregar':
-        palabra = valores.get(0, None)
-        #TODO: Avisar el usuario que debe ingresar una palabra
-        palabra, definicion = Validacion.validar_con_wikcionario(palabra)
-
-        if palabra:
-            palabra = Palabra(palabra, definicion)
-            config.agregar_palabras(palabra)
+        valor_palabra = valores.get(0, None)
+        if valor_palabra:
+            palabra, definicion = Validacion.validar_con_wikcionario(valor_palabra)
+            print(palabra)
+            if palabra:
+                palabra = Palabra(palabra, definicion)
+                config.agregar_palabras(palabra)
+                mensaje = ("Exito", "la palabra {}, se agrego con exito".format(palabra))
+                Notificacion.aviso(mensaje)
+            else:
+                # TODO Logica de generar reporte
+                Validacion.generar_reporte(valor_palabra)
+                mensaje = ("Palabra inexistente",
+                           "No se pudo validar la palabra, fue agregada al reporte")
+                Notificacion.aviso(mensaje)
         else:
-            # falta logica de generar reporte
-            Validacion.generar_reporte(palabra)
-            # TODO: generar reporte txt
-            # TODO: PopUp informando que no se pudo validar la palabra.
+            mensaje = (("Campo vacio", "debe agregar palabras para jugar"))
+            Notificacion.aviso(mensaje)
+
 
     elif evento == 'verb':
         color_select = ec.paleta_colores()
@@ -75,14 +82,15 @@ while True:
                 window.Close()
                 Juego.jugar(valores, config)
             else:
-                #popUp informando que seleccione una cantidad minima de palabras
-                pass
+                mensaje = ("Campo obligatorio", "Tenes que seleccionar una cantidad minima de palabras para poder encontrarlas")
+                Notificacion.aviso(mensaje)
         else:
             #PopUp informando que cargue los colores
-            pass
+            mensaje = ("Campo obligatorio", "Asocia un color a un tipo de palabra, ejemplo: selecciona sustantivo y asignale el color amarillo")
+            Notificacion.aviso(mensaje)
     elif evento is None:
         break
-    window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+    # window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
 
 

@@ -4,12 +4,13 @@ from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 
-from constantes import ALFABETO, PALABRAS_TODAS
+from constantes import ALFABETO
 
 __all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
+    'Notificacion'
 ]
 
 
@@ -74,10 +75,23 @@ class Configuracion():
         # self.cantidad = cantidad
         self.palabras_juego = []
         self.__ayuda = ""
-        self.__direccion = ""
-        self.__tamanio = ""
-        self.__keys = ""
         self.colores = {}
+        self.__direccion = ""
+        self.__errores = {}
+        self.__keys = ""
+        self.__tamanio = ""
+
+    @property
+    def errores(self):
+        return self.__errores
+
+    @errores.setter
+    def errores(self, error):
+        """
+            error[0]: Tipo de error
+            error[1]: Mensage a mostrar
+        """
+        self.__errores.update({error[0]: error[1]})
 
     @property
     def keys(self):
@@ -112,6 +126,11 @@ class Configuracion():
 
     @property
     def direccion(self):
+        #TODO: prodria ser una tupla ((True, "vertical"), (False, "horizontal"))
+        """ valores: True o False
+        representacion: True = vertical
+                        False = horizontal
+        """
         return self.__direccion
 
     @direccion.setter
@@ -175,16 +194,33 @@ class Configuracion():
             self.tamanio = False
 
     def agregar_color(self, tipo, color):
+        """
+            tipo: sustantivo, adjetivo, verbo
+            color: color de cuando se va seleccionando la palabra
+        """
         if color in self.color.values():
-            #TODO: pop up NO PUEDE REPETIR LOS COLORES
-        self.color.update({tipo:color})
+            # TODO: pop up NO PUEDE REPETIR LOS COLORES
+            mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tip[o de palabra")
+            Notificacion.aviso(mensaje)
+        else:
+            self.color.update({tipo: color})
+
+
+class Notificacion():
+    @classmethod
+    def aviso(cls, mensaje):
+        """
+            mensaje[0] encabezado del error
+            mensaje[1] mensaje a mostrar
+        """
+        sg.Popup(mensaje[0], mensaje[1])
 
 
 class Validacion():
     wiki = WiktionaryParser
 
     @classmethod
-    def generar_reporte(palabra):
+    def generar_reporte(cls, palabra):
         """
         genera reporte de palabras no existentes
         """
@@ -222,8 +258,8 @@ class Validacion():
         """ Verifica si las palabras seleccionadas por el jugador
             coinciden con las palabras elejeridas por la profesora.
         """
-        print(palabras_ganar)  # lista Palabras
-        print(seleccionadas)  # { ver: [], susb: [], adj: [] }
+        # print(palabras_ganar)  # lista Palabras
+        # print(seleccionadas)  # { ver: [], susb: [], adj: [] }
 
         faltantes = [palabra.nombre for palabra in palabras_ganar]
 

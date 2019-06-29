@@ -19,6 +19,9 @@ from constantes import LAYOUT_JUEGO
 
 
 def generar_layout_ayuda(config):
+    """
+    Crear el layout de ayuda, con las palabras y sus definiciones
+    """
     layout = []
     valores = []
     for palabra in config.palabras:
@@ -51,7 +54,7 @@ class Juego():
 
     @classmethod
     def jugar(cls, valores, config):
-        if config.direccion is True:
+        if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
             grilla = generarGrillaVertical(dimension_grilla, palabras_ord)
