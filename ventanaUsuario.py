@@ -47,7 +47,7 @@ def elementos_fila(dim_columna, fila_palabra, palabra):
         else:
             key_letra = indice + add
             key = str(key_letra)
-            letras_fila.append(sg.Button(letra_random(), key=key))
+            letras_fila.append(sg.Button(letra_random(),button_color = BCOLOR, key=key))
             pos_columna += 1
             add += 1
     return letras_fila
@@ -64,11 +64,11 @@ def elementos_columna(dim_fila, columna_palabra, palabra):
             for letra in palabra.nombre:
                 key_letra = dim_columna * fila_palabra + add
                 key = str(key_letra)
-                letra_columna.append(sg.Button(letra, key=key))
+                letra_columna.append(sg.Button(letra,button_color = BCOLOR ,key=key))
                 add += 1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random(), key=key))
+            letra_columna.append(sg.Button(letra_random(), button_color = BCOLOR,key=key))
             pos_fila += 1
             add+=1
     return letra_columna

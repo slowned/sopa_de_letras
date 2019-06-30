@@ -56,20 +56,22 @@ class Juego():
         for letra in lista_letras:
             ventana.Element(letra).Update(button_color=BCOLOR)
 
+    @classmethod
     def dibujar_botones(cls, config):
-         """"""
         cls.layout.append([sg.Button("SUSTANTIVO", button_color=('white',config.colores[NOUN]), key=NOUN),
-         sg.Button("VERBO", button_color=('white', config.colores[VERB] ), key=VERB),
-         sg.Button("ADJETIVO", button_color=('white', config.colores[ADJECTIVE] ), key=ADJECTIVE),
+        sg.Button("VERBO", button_color=('white', config.colores[VERB] ), key=VERB),
+        sg.Button("ADJETIVO", button_color=('white', config.colores[ADJECTIVE] ), key=ADJECTIVE)
         ])
-    
+
+    @classmethod
     def dibujar_excluir(cls):
-        cls.layout.append([sg.Button("DESHACER", button_color=('white','LightBlue1'), key=NOUN),])
-        
+        cls.layout.append([sg.Button("DESHACER", button_color=('white','LightBlue1'), key='UNDO'),])
+
 
     @classmethod
     def dibujar(cls, grilla, config):
         cls.dibujar_botones(config)
+        cls.dibujar_excluir()
         cls.layout.append([sg.Submit("Instruccion de Juego", key= "_instrcciones_")])
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
         if config.ayuda:
