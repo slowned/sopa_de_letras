@@ -25,8 +25,6 @@ def paleta_colores():
     # -- Event loop --
     while True:
         event,values = window.Read()
-        print(event)
-        print(values)
         if event is None:
             break
         else:

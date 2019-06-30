@@ -12,8 +12,7 @@ from ventanaUsuario import (
         generarGrillaHorizontal,
 )
 
-from utilidades import Validacion
-
+from utilidades import Validacion, Notificacion
 
 from constantes import LAYOUT_JUEGO
 
@@ -42,6 +41,9 @@ class Juego():
     layout = LAYOUT_JUEGO
     lista_key_palabras = [NOUN, VERB, ADJECTIVE]
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
+
+    # TODO: crear metodo de clase para que habilite los tipo de palabras
+    # y otro para que despinte de las letras cuando sale un popup de error
 
     @classmethod
     def dibujar(cls, grilla, config):
@@ -72,11 +74,12 @@ class Juego():
 
         generando = False
 
+        palabra = ''
         while True:
             evento, valores = ventana.Read()
             if evento is None:
                 break
-            if evento in cls.lista_key_palabras:
+            if evento in cls.lista_key_palabras:    # Seleccion de verb, adj, sus
                 lista_key_disable = cls.lista_key_palabras[:]
                 lista_key_disable.remove(evento)
                 for elemento in lista_key_disable:
@@ -89,12 +92,20 @@ class Juego():
                 palabra += letra
                 ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
             elif evento == '_agregar_':
-                cls.palabras_juego[tipo_palabra].append(palabra)
-                palabra = ''
-                for elemento in lista_key_disable:
-                    ventana.Element(elemento).Update(disabled=False)
+                if palabra and tipo_palabra:
+                    cls.palabras_juego[tipo_palabra].append(palabra)
+                    palabra = ''
+                    for elemento in lista_key_disable:
+                        ventana.Element(elemento).Update(disabled=False)
+                else:
+                    mensaje = ("Error", "Debe pintar una palabra antes de agregarla")
+                    # TODO: volver a activar todos los botones.. letras y tipo
+                    Notificacion.aviso(mensaje)
+
             elif evento == '_verificar_':
                 Validacion.ganar(config.palabras, cls.palabras_juego)
             elif evento == '_instrcciones_':
+                # TODO: generar logica de las intrucciones
+                # Dentro de la clase notificaciones
                 layout_instructivo()
         ventana.Close()
