@@ -72,11 +72,10 @@ while True:
         config.agregar_color(ADJECTIVE, color_select)
 
     elif evento == JUGAR:
-        print(valores)
         if Validacion.verificar_colores(dict_color):
             if Validacion.verificar_cantidad_palabras(valores):
-                config.seleccionar_palabras(valores)
                 config.set_opciones(valores)
+                config.seleccionar_palabras(valores)
                 valores.update({'opciones': config})
                 window.Close()
                 Juego.jugar(valores, config)

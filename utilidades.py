@@ -5,6 +5,7 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 
 from constantes import ALFABETO
+from constantes import PALABRAS_TODAS
 
 __all__ = [
     'Configuracion',
@@ -105,6 +106,10 @@ class Configuracion():
     def palabras_todas(self):
         return self.__palabras_todas
 
+    @palabras_todas.setter
+    def palabras_todas(self, palabras):
+        self.__palabras_todas = palabras
+
     def agregar_palabras(self, palabra):
         """ Palabras agregadas por la profesora """
         self.__palabras_todas[palabra.tipo].append(palabra)
@@ -126,7 +131,8 @@ class Configuracion():
 
     @property
     def direccion(self):
-        #TODO: prodria ser una tupla ((True, "vertical"), (False, "horizontal"))
+        # TODO: prodria ser una tupla
+        # ((True, "vertical"), (False, "horizontal"))
         """ valores: True o False
         representacion: True = vertical
                         False = horizontal
@@ -159,6 +165,13 @@ class Configuracion():
             for i in range(int(value)):
                 self.palabras.append(random.choice(self.palabras_todas[key]))
 
+    def sin_palabras(self):
+        sin_palabras = True
+        for lista_palabras in self.palabras_todas.values():
+            if len(lista_palabras) > 0:
+                sin_palabras = False
+        return sin_palabras
+
     def set_opciones(self, valores):
         """ agarra los opciones seleccionadas y las setea
             a la instancia de configuracion.
@@ -172,6 +185,8 @@ class Configuracion():
         #     '_tamanio_mayuscula_': True,
         #     '_tamanio_minuscula_': False,
         # }
+        if self.sin_palabras():
+            self.palabras_todas = PALABRAS_TODAS
 
         opciones = {}
         for key, value in valores.items():
