@@ -83,6 +83,7 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras):
     """
     dim_fila, dim_columna = dimension_grilla
     fila_grilla = []
+
     grilla_sopa_letras = []
     for fila in range(dim_fila):
         fila_grilla = elementos_fila(dim_columna,fila, lista_palabras[fila])
