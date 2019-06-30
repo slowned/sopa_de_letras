@@ -12,6 +12,8 @@ from utilidades import PALABRAS_TODAS
 from utilidades import *
 from juego import Juego
 
+
+
 AGREGAR = 'Agregar'
 JUGAR = 'Jugar'
 
@@ -37,7 +39,8 @@ window = sg.Window("Sopa de Letras").Layout(layout)
 
 config = Configuracion()
 
-dict_color = {}
+#dict_color = {}
+
 
 while True:
     evento, valores = window.Read()
@@ -62,18 +65,32 @@ while True:
 
     elif evento == 'verb':
         color_select = ec.paleta_colores()
-        config.agregar_color(VERB, color_select)
-        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        if not(Validacion.validar_color_usado(color_select, config.colores.values())):
+            config.agregar_color(VERB, color_select)
+            window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        else:
+            mensaje =("Error"," El color fue seleccionado")
+            Notificacion.aviso(mensaje)
+
 
     elif evento == 'noun':
         color_select = ec.paleta_colores()
-        config.agregar_color(NOUN, color_select)
-        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        if not(Validacion.validar_color_usado(color_select, config.colores.values())):
+            config.agregar_color(NOUN, color_select)
+            window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        else:
+            mensaje =("Error"," El color fue seleccionado")
+            Notificacion.aviso(mensaje)
+
 
     elif evento == 'adjetive':
         color_select = ec.paleta_colores()
-        config.agregar_color(ADJECTIVE, color_select)
-        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        if not(Validacion.validar_color_usado(color_select, config.colores.values())):
+            config.agregar_color(ADJECTIVE, color_select)
+            window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+        else:
+            mensaje =("Error"," El color fue seleccionado")
+            Notificacion.aviso(mensaje)
 
     elif evento == JUGAR:
         if Validacion.verificar_colores(config.colores):

@@ -15,6 +15,7 @@ from ventanaUsuario import (
 from utilidades import Validacion
 
 
+
 from constantes import LAYOUT_JUEGO
 
 
@@ -37,6 +38,7 @@ def layout_instructivo():
     pass
 
 
+
 class Juego():
 
     layout = LAYOUT_JUEGO
@@ -44,7 +46,28 @@ class Juego():
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
 
     @classmethod
+<<<<<<< HEAD
+    def habilitar_tipos(cls,ventana):
+        for elemento in cls.lista_key_palabras:
+            ventana.Element(elemento).Update(disabled=False)
+
+    @classmethod
+    def habilitar_letras(cls,ventana,lista_letras):
+        BCOLOR=('deep pink','peach puff')
+        for letra in lista_letras:
+            ventana.Element(letra).Update(button_color=BCOLOR)
+=======
+    def dibujar_botones(cls, config):
+         """"""
+        cls.layout.append([sg.Button("SUSTANTIVO", button_color=('white',config.colores[NOUN]), key=NOUN),
+         sg.Button("VERBO", button_color=('white', config.colores[VERB] ), key=VERB),
+         sg.Button("ADJETIVO", button_color=('white', config.colores[ADJECTIVE] ), key=ADJECTIVE),
+        ])
+>>>>>>> 14a52e70914741a4df5289498775100e80181d8e
+
+    @classmethod
     def dibujar(cls, grilla, config):
+        cls.dibujar_botones(config)
         cls.layout.append([sg.Submit("Instruccion de Juego", key= "_instrcciones_")])
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
         if config.ayuda:
@@ -53,7 +76,7 @@ class Juego():
 
 
     @classmethod
-    def jugar(cls, valores, config):
+    def jugar(cls, valores, config):  #Juego principal
         if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
@@ -72,6 +95,8 @@ class Juego():
 
         generando = False
 
+        lista_letras_disabled=[]
+
         while True:
             evento, valores = ventana.Read()
             if evento is None:
@@ -86,6 +111,7 @@ class Juego():
                 tipo_palabra = evento
             elif evento in config.keys and generando:
                 letra = ventana.Element(evento).ButtonText
+                lista_letras_disabled.append(evento)
                 palabra += letra
                 ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
             elif evento == '_agregar_':
@@ -97,4 +123,8 @@ class Juego():
                 Validacion.ganar(config.palabras, cls.palabras_juego)
             elif evento == '_instrcciones_':
                 layout_instructivo()
+            elif evento == 'UNDO':
+                cls.habilitar_tipos(ventana)
+                cls.habilitar_letras(ventana,lista_letras_disabled)
+                lista_letra_disabled=[]
         ventana.Close()

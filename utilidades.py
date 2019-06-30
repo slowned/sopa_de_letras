@@ -358,6 +358,10 @@ class Validacion():
         return False
 
     @classmethod
+    def validar_color_usado(cls, color, lista_colores):
+        return (color in lista_colores)
+
+    @classmethod
     def verificar_cantidad_palabras(cls, valores):
         """ Controla que se hallan selecionados al menos un verbo, adjetivo o sustantivo
         """
@@ -366,7 +370,7 @@ class Validacion():
         adjetivos = int(valores.get(ADJECTIVE))
         if verbos or sustantivos or adjetivos:
             return True
-        return False 
+        return False
 
 
 def generar_palabras(palabras):
