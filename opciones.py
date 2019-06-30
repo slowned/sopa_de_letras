@@ -52,7 +52,7 @@ while True:
                 Notificacion.aviso(mensaje)
             else:
                 # TODO Logica de generar reporte
-                Validacion.generar_reporte(valor_palabra)
+                Notificacion.generar_reporte(valor_palabra)
                 mensaje = ("Palabra inexistente",
                            "No se pudo validar la palabra, fue agregada al reporte")
                 Notificacion.aviso(mensaje)
