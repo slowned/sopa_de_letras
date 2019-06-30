@@ -44,14 +44,12 @@ while True:
         valor_palabra = valores.get(0, None)
         if valor_palabra:
             palabra, definicion = Validacion.validar_con_wikcionario(valor_palabra)
-            print(palabra)
             if palabra:
                 palabra = Palabra(palabra, definicion)
                 config.agregar_palabras(palabra)
                 mensaje = ("Exito", "la palabra {}, se agrego con exito".format(palabra))
                 Notificacion.aviso(mensaje)
             else:
-                # TODO Logica de generar reporte
                 Notificacion.generar_reporte(valor_palabra)
                 mensaje = ("Palabra inexistente",
                            "No se pudo validar la palabra, fue agregada al reporte")
@@ -74,6 +72,7 @@ while True:
         config.agregar_color(ADJECTIVE, color_select)
 
     elif evento == JUGAR:
+        print(valores)
         if Validacion.verificar_colores(dict_color):
             if Validacion.verificar_cantidad_palabras(valores):
                 config.seleccionar_palabras(valores)
@@ -82,15 +81,20 @@ while True:
                 window.Close()
                 Juego.jugar(valores, config)
             else:
-                mensaje = ("Campo obligatorio", "Tenes que seleccionar una cantidad minima de palabras para poder encontrarlas")
+                mensaje = ("Campo obligatorio: Cantidad de palabras", "Tenes que seleccionar una cantidad minima de palabras para poder encontrarlas")
                 Notificacion.aviso(mensaje)
         else:
-            #PopUp informando que cargue los colores
-            mensaje = ("Campo obligatorio", "Asocia un color a un tipo de palabra, ejemplo: selecciona sustantivo y asignale el color amarillo")
+            mensaje = ("Campo obligatorio: Colores", "Asocia un color a un tipo de palabra, ejemplo: selecciona sustantivo y asignale el color amarillo")
             Notificacion.aviso(mensaje)
     elif evento is None:
         break
+
     # window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+
+    # TODO: si esto esta aca cuando se pone jugar
+    # y no se seleccionaron colores rompe,
+    # deberia estar en el metodo donde se asignan los colores
+    # en ec.paleta_colores()
 
 
 

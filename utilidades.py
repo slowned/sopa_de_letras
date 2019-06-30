@@ -198,12 +198,12 @@ class Configuracion():
             tipo: sustantivo, adjetivo, verbo
             color: color de cuando se va seleccionando la palabra
         """
-        if color in self.color.values():
+        if color in self.colores.values():
             # TODO: pop up NO PUEDE REPETIR LOS COLORES
             mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tip[o de palabra")
             Notificacion.aviso(mensaje)
         else:
-            self.color.update({tipo: color})
+            self.colores.update({tipo: color})
 
 
 class Notificacion():
@@ -215,16 +215,18 @@ class Notificacion():
         """
         sg.Popup(mensaje[0], mensaje[1])
 
-
-class Validacion():
-    wiki = WiktionaryParser
-
     @classmethod
     def generar_reporte(cls, palabra):
         """
         genera reporte de palabras no existentes
         """
-        pass
+        reporte = open("reporte.txt", "a+")
+        reporte.write(palabra)
+
+
+class Validacion():
+    wiki = WiktionaryParser
+
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
@@ -285,9 +287,23 @@ class Validacion():
 
     @classmethod
     def verificar_colores(cls, dict_colores):
+        """ Controla que sustantivos, adjetivos y verbos
+            tengan un color asociado
+        """
         if len(dict_colores) == 3:
             return True
         return False
+
+    @classmethod
+    def verificar_cantidad_palabras(cls, valores):
+        """ Controla que se hallan selecionados al menos un verbo, adjetivo o sustantivo
+        """
+        verbos = int(valores.get(VERB))
+        sustantivos = int(valores.get(NOUN))
+        adjetivos = int(valores.get(ADJECTIVE))
+        if verbos or sustantivos or adjetivos:
+            return True
+        return False 
 
 
 def generar_palabras(palabras):
