@@ -125,11 +125,11 @@ class Juego():
                 if palabra and tipo_palabra:
                     cls.palabras_juego[tipo_palabra].append(palabra)
                     palabra = ''
-                    for elemento in lista_key_disable:
-                        ventana.Element(elemento).Update(disabled=False)
+                    cls.habilitar_tipos(ventana)
+                    lista_letras_disabled = []
                 else:
                     mensaje = ("Error", "Debe pintar una palabra antes de agregarla")
-                    # TODO: volver a activar todos los botones.. letras y tipo
+                    cls.habilitar_tipos(ventana)
                     Notificacion.aviso(mensaje)
 
             elif evento == '_verificar_':
