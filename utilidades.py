@@ -3,8 +3,9 @@ import PySimpleGUI as sg
 from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
+import string
 
-from constantes import ALFABETO
+
 
 
 
@@ -63,6 +64,50 @@ class Palabra():
         parsed = parsed.split('/')
         return parsed[1]
 
+# --------- Constantes para mokear datos ------
+ALFABETO = string.ascii_letters
+VERBOS = [
+    'jugar',
+    'llamar',
+    'saltar',
+    'correr',
+    'buscar',
+    'comer',
+    'ver',
+    'hablar',
+]
+
+ADJETIVOS = [
+    'afortunado',
+    'alto',
+    'negro',
+    'obsecuente',
+    'paciente',
+    'extremo',
+    'famoso',
+    'inteligente',
+]
+
+SUSTANTIVOS = [
+    'animal',
+    'libro',
+    'aire',
+    'esfera',
+    'planta',
+    'programa',
+    'guitarra',
+    'idea',
+    'trabajo',
+    'ciruela',
+    'vaso',
+]
+
+
+VERBOS = [Palabra(sus, 'def') for sus in VERBOS]
+SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
+ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
+
+PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
 
 class Configuracion():
     """
@@ -306,6 +351,8 @@ class Validacion():
         """ Controla que sustantivos, adjetivos y verbos
             tengan un color asociado
         """
+        print(dict_colores)
+        print(len(dict_colores))
         if len(dict_colores) == 3:
             return True
         return False

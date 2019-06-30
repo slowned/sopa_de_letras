@@ -6,8 +6,8 @@ from constantes import (
     AYUDA_COL,
     DIRECCION_COL,
     TAMANIO_COL,
-    PALABRAS_TODAS,
 )
+from utilidades import PALABRAS_TODAS
 
 from utilidades import *
 from juego import Juego
@@ -62,18 +62,21 @@ while True:
 
     elif evento == 'verb':
         color_select = ec.paleta_colores()
-        config.agregar_color(NOUN, color_select)
+        config.agregar_color(VERB, color_select)
+        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
     elif evento == 'noun':
         color_select = ec.paleta_colores()
         config.agregar_color(NOUN, color_select)
+        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
     elif evento == 'adjetive':
         color_select = ec.paleta_colores()
         config.agregar_color(ADJECTIVE, color_select)
+        window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
     elif evento == JUGAR:
-        if Validacion.verificar_colores(dict_color):
+        if Validacion.verificar_colores(config.colores):
             if Validacion.verificar_cantidad_palabras(valores):
                 config.set_opciones(valores)
                 config.seleccionar_palabras(valores)
@@ -89,7 +92,7 @@ while True:
     elif evento is None:
         break
 
-    window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+    # window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
     # TODO: si esto esta aca cuando se pone jugar
     # y no se seleccionaron colores rompe,

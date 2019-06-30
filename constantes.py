@@ -1,11 +1,11 @@
 import string
 import PySimpleGUI as sg
+from utilidades import Palabra
 
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 
 
 
-ALFABETO = string.ascii_letters
 MAXIMO_PALABRA = [x for x in range(10)]
 COL_BOTONES_TIPOS = [
     [sg.Button("SUSTANTIVO", button_color=('white', '#311380'), key=NOUN),
@@ -65,50 +65,6 @@ TIPO_PALABRAS_CANT = [
 
 # -------- Fin Elementos Opciones --------
 
-# --------- Constantes para mokear datos ------
-VERBOS = [
-    'jugar',
-    'llamar',
-    'saltar',
-    'correr',
-    'buscar',
-    'comer',
-    'ver',
-    'hablar',
-]
-
-ADJETIVOS = [
-    'afortunado',
-    'alto',
-    'negro',
-    'obsecuente',
-    'paciente',
-    'extremo',
-    'famoso',
-    'inteligente',
-]
-
-SUSTANTIVOS = [
-    'animal',
-    'libro',
-    'aire',
-    'esfera',
-    'planta',
-    'programa',
-    'guitarra',
-    'idea',
-    'trabajo',
-    'ciruela',
-    'vaso',
-]
-
-from utilidades import Palabra
-
-VERBOS = [Palabra(sus, 'def') for sus in VERBOS]
-SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
-ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
-
-PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
 
 
 VALORES = {
