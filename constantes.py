@@ -1,25 +1,20 @@
 import string
 import PySimpleGUI as sg
-from utilidades import Palabra
+from utilidades import Palabra, Configuracion
 
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 
 
-
 MAXIMO_PALABRA = [x for x in range(10)]
-COL_BOTONES_TIPOS = [
-    [sg.Button("SUSTANTIVO", button_color=('white', '#311380'), key=NOUN),
-     sg.Button("VERBO", button_color=('white', '#311380'), key=VERB),
-     sg.Button("ADJETIVO", button_color=('white', '#311380'), key=ADJECTIVE),
-    ],
-]
+
 
 LAYOUT_AYUDA = []
 LAYOUT_JUEGO = [
     [sg.Text('Sopa de letras', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
-    [sg.Column(COL_BOTONES_TIPOS)],
 ]
 
+# valores.get('opciones')
+# config.
 
 
 

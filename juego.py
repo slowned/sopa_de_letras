@@ -15,6 +15,7 @@ from ventanaUsuario import (
 from utilidades import Validacion
 
 
+
 from constantes import LAYOUT_JUEGO
 
 
@@ -44,7 +45,16 @@ class Juego():
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
 
     @classmethod
+    def dibujar_botones(cls, config):
+         """"""
+        cls.layout.append([sg.Button("SUSTANTIVO", button_color=('white',config.colores[NOUN]), key=NOUN),
+         sg.Button("VERBO", button_color=('white', config.colores[VERB] ), key=VERB),
+         sg.Button("ADJETIVO", button_color=('white', config.colores[ADJECTIVE] ), key=ADJECTIVE),
+        ])
+
+    @classmethod
     def dibujar(cls, grilla, config):
+        cls.dibujar_botones(config)
         cls.layout.append([sg.Submit("Instruccion de Juego", key= "_instrcciones_")])
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
         if config.ayuda:
