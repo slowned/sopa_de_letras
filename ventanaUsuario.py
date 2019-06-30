@@ -4,6 +4,7 @@ import random
 import PySimpleGUI as sg
 from utilidades import *
 
+BCOLOR=('deep pink','peach puff')
 """
 Ventana de Usuario
     -> Muestra:
@@ -39,7 +40,7 @@ def elementos_fila(dim_columna, fila_palabra, palabra):
             for letra in palabra.nombre:
                 key_letra = indice + add
                 key = str(key_letra)
-                letras_fila.append(sg.Button(letra, key=key))
+                letras_fila.append(sg.Button(letra,button_color=(BCOLOR), key=key))
                 add += 1
             #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
             pos_columna += palabra.longitud
