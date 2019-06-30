@@ -6,17 +6,6 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 
 
 MAXIMO_PALABRA = [x for x in range(10)]
-<<<<<<< HEAD
-COL_BOTONES_TIPOS = [
-    [sg.Button("SUSTANTIVO", button_color=('white', '#311380'), key=NOUN),
-     sg.Button("VERBO", button_color=('white', '#311380'), key=VERB),
-     sg.Button("ADJETIVO", button_color=('white', '#311380'), key=ADJECTIVE),
-     sg.Button("DESHACER", button_color=('white', 'blue'), key='UNDO'),
-    ],
-]
-=======
-
->>>>>>> 14a52e70914741a4df5289498775100e80181d8e
 
 LAYOUT_AYUDA = []
 LAYOUT_JUEGO = [
@@ -25,7 +14,6 @@ LAYOUT_JUEGO = [
 
 # valores.get('opciones')
 # config.
-
 
 
 

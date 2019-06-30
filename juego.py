@@ -46,7 +46,6 @@ class Juego():
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
 
     @classmethod
-<<<<<<< HEAD
     def habilitar_tipos(cls,ventana):
         for elemento in cls.lista_key_palabras:
             ventana.Element(elemento).Update(disabled=False)
@@ -56,14 +55,17 @@ class Juego():
         BCOLOR=('deep pink','peach puff')
         for letra in lista_letras:
             ventana.Element(letra).Update(button_color=BCOLOR)
-=======
+
     def dibujar_botones(cls, config):
          """"""
         cls.layout.append([sg.Button("SUSTANTIVO", button_color=('white',config.colores[NOUN]), key=NOUN),
          sg.Button("VERBO", button_color=('white', config.colores[VERB] ), key=VERB),
          sg.Button("ADJETIVO", button_color=('white', config.colores[ADJECTIVE] ), key=ADJECTIVE),
         ])
->>>>>>> 14a52e70914741a4df5289498775100e80181d8e
+    
+    def dibujar_excluir(cls):
+        cls.layout.append([sg.Button("DESHACER", button_color=('white','LightBlue1'), key=NOUN),])
+        
 
     @classmethod
     def dibujar(cls, grilla, config):
