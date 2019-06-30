@@ -6,6 +6,7 @@ from constantes import (
     AYUDA_COL,
     DIRECCION_COL,
     TAMANIO_COL,
+    PALABRAS_TODAS,
 )
 
 from utilidades import *
@@ -88,7 +89,7 @@ while True:
     elif evento is None:
         break
 
-    # window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
+    window.Element(evento).Update(button_color=(('black',('blue',color_select)[True])))
 
     # TODO: si esto esta aca cuando se pone jugar
     # y no se seleccionaron colores rompe,

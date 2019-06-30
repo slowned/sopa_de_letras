@@ -4,6 +4,7 @@ import PySimpleGUI as sg
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 
 
+
 ALFABETO = string.ascii_letters
 MAXIMO_PALABRA = [x for x in range(10)]
 COL_BOTONES_TIPOS = [

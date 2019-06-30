@@ -5,7 +5,8 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 
 from constantes import ALFABETO
-from constantes import PALABRAS_TODAS
+
+
 
 __all__ = [
     'Configuracion',
