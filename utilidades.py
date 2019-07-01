@@ -284,6 +284,17 @@ class Notificacion():
         reporte = open("reporte.txt", "a+")
         reporte.write(palabra)
 
+    @classmethod
+    def instrucciones(cls):
+        sg.Popup('Instructivo',
+        '1) Elegir el tipo de palabra a buscar:', 
+        'SUSTANTIVO-VERBO-ADJETIVO',
+        '2) Presionar sobre las letras hasta colorear la palabra',
+        '3) Puede presionar el boton "Deshacer" si usted cree que se equivoco de letra/palabra',
+        '4) Presionar tecla "Agregar" cuando usted crea que coloreo la palabra correcta',
+        '5) Volver al paso 1) hasta que crea que haya seleccionado todas las palabras en la sopa',
+        '6) Presionar "Verificar" y usted sabrá si gano o perdio el juego')
+
 
 class Validacion():
     wiki = WiktionaryParser

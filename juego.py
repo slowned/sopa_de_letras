@@ -32,11 +32,10 @@ def generar_layout_ayuda(config):
     return layout
 
 def layout_instructivo():
-    #TODO: popUp con instrucciones de Juego
-        #
+    """
+    Crear el layout de instrucciones
+    """
     pass
-
-
 
 class Juego():
 
@@ -67,14 +66,17 @@ class Juego():
 
     @classmethod
     def dibujar_excluir(cls):
-        cls.layout.append([sg.Button("DESHACER", button_color=('white','LightBlue1'), key='UNDO'),])
+        cls.layout.append([sg.Button("DESHACER", button_color=('black','LightBlue1'), key='UNDO'),])
 
+    @classmethod
+    def instrucciones(cls):
+        cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_")])
 
     @classmethod
     def dibujar(cls, grilla, config):
         cls.dibujar_botones(config)
         cls.dibujar_excluir()
-        cls.layout.append([sg.Submit("Instruccion de Juego", key= "_instrcciones_")])
+        cls.instrucciones()
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
         if config.ayuda:
             [cls.layout.append(generar_layout_ayuda(config))]
@@ -131,13 +133,10 @@ class Juego():
                     mensaje = ("Error", "Debe pintar una palabra antes de agregarla")
                     cls.habilitar_tipos(ventana)
                     Notificacion.aviso(mensaje)
-
             elif evento == '_verificar_':
                 Validacion.ganar(config.palabras, cls.palabras_juego)
-            elif evento == '_instrcciones_':
-                # TODO: generar logica de las intrucciones
-                # Dentro de la clase notificaciones
-                layout_instructivo()
+            elif evento == '_instructivo_':
+                Notificacion.instrucciones()
             elif evento == 'UNDO':
                 cls.habilitar_tipos(ventana)
                 cls.habilitar_letras(ventana,lista_letras_disabled)
