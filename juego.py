@@ -22,14 +22,22 @@ def generar_layout_ayuda(config):
     """
     Crear el layout de ayuda, con las palabras y sus definiciones
     """
-    layout = []
-    valores = []
-    for palabra in config.palabras:
-        valor = 'palabra: {}, definicion: {}'.format(palabra.nombre, palabra.definicion)
-        valores.append(valor)
 
-    layout.append(sg.Listbox(valores, size=(50, 5)))
-    return layout
+    layout = []
+    valores = ["AYUDA:"]
+    if config.ayuda:
+        #Ayuda Si: Muestra una ayuda completa
+        for palabra in config.palabras:
+            valor = 'palabra: {}, definicion: {}'.format(palabra.nombre, palabra.definicion)
+            valores.append(valor)
+    else:
+        for palabra in config.palabras:
+            valor = 'definicion: {}'.format(palabra.definicion)
+            valores.append(valor)
+
+    #layout.append(sg.Listbox(valores, size=(50, 5)))
+    sg.Popup(valores)
+    #return layout
 
 def layout_instructivo():
     """
@@ -67,19 +75,20 @@ class Juego():
     @classmethod
     def dibujar_excluir(cls):
         cls.layout.append([sg.Button("DESHACER", button_color=('black','LightBlue1'), key='UNDO'),])
-
     @classmethod
-    def instrucciones(cls):
-        cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_")])
+    def instrucciones_ayuda(cls):
+        cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_"), sg.Submit("AYUDA", key="_ayuda_")])
+
+    # @classmethod
+    # def instrucciones(cls):
+    #     cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_")])
 
     @classmethod
     def dibujar(cls, grilla, config):
         cls.dibujar_botones(config)
         cls.dibujar_excluir()
-        cls.instrucciones()
+        cls.instrucciones_ayuda()
         [cls.layout.append(fila_grilla) for fila_grilla in grilla]
-        if config.ayuda:
-            [cls.layout.append(generar_layout_ayuda(config))]
         cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_")])
 
 
@@ -135,6 +144,8 @@ class Juego():
                     Notificacion.aviso(mensaje)
             elif evento == '_verificar_':
                 Validacion.ganar(config.palabras, cls.palabras_juego)
+            elif evento == '_ayuda_':
+                generar_layout_ayuda(config)
             elif evento == '_instructivo_':
                 Notificacion.instrucciones()
             elif evento == 'UNDO':
