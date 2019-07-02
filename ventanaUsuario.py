@@ -27,7 +27,7 @@ def letra_random(mayuscula=False):
         return letra.upper()
 
 def crear_boton():
-    btn = [sg.Button(letra_random(), button_color=('white', 'green'))]
+    btn = [sg.Button(letra_random(), button_color=('white', 'green'), size=(4,1))]
     return btn
 
 def elementos_fila(dim_columna, fila_palabra, palabra):
@@ -40,14 +40,14 @@ def elementos_fila(dim_columna, fila_palabra, palabra):
             for letra in palabra.nombre:
                 key_letra = indice + add
                 key = str(key_letra)
-                letras_fila.append(sg.Button(letra,button_color=(BCOLOR), key=key))
+                letras_fila.append(sg.Button(letra,button_color=(BCOLOR), size=(4,1), key=key))
                 add += 1
             #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
             pos_columna += palabra.longitud
         else:
             key_letra = indice + add
             key = str(key_letra)
-            letras_fila.append(sg.Button(letra_random(),button_color = BCOLOR, key=key))
+            letras_fila.append(sg.Button(letra_random(),button_color = BCOLOR, size=(4,1), key=key))
             pos_columna += 1
             add += 1
     return letras_fila
@@ -64,11 +64,11 @@ def elementos_columna(dim_fila, columna_palabra, palabra):
             for letra in palabra.nombre:
                 key_letra = dim_columna * fila_palabra + add
                 key = str(key_letra)
-                letra_columna.append(sg.Button(letra,button_color = BCOLOR ,key=key))
+                letra_columna.append(sg.Button(letra,button_color = BCOLOR ,size=(4,1),key=key))
                 add += 1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random(), button_color = BCOLOR,key=key))
+            letra_columna.append(sg.Button(letra_random(), button_color = BCOLOR,size=(4,1),key=key))
             pos_fila += 1
             add+=1
     return letra_columna
