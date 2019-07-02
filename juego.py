@@ -19,9 +19,6 @@ from constantes import LAYOUT_JUEGO
 
 
 def generar_layout_ayuda(config):
-    """
-    Crear el layout de ayuda, con las palabras y sus definiciones
-    """
 
     layout = []
     valores = ["AYUDA:"]
@@ -48,6 +45,7 @@ def layout_instructivo():
 class Juego():
 
     layout = LAYOUT_JUEGO
+    columna_opciones = []
     lista_key_palabras = [NOUN, VERB, ADJECTIVE]
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
 
@@ -74,22 +72,19 @@ class Juego():
 
     @classmethod
     def dibujar_excluir(cls):
-        cls.layout.append([sg.Button("DESHACER", button_color=('black','LightBlue1'), key='UNDO'),])
+        cls.columna_opciones.append([sg.Button("DESHACER", button_color=('black','LightBlue1'), key='UNDO'),])
+
     @classmethod
     def instrucciones_ayuda(cls):
-        cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_"), sg.Submit("AYUDA", key="_ayuda_")])
-
-    # @classmethod
-    # def instrucciones(cls):
-    #     cls.layout.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_")])
+        cls.columna_opciones.append([sg.Button("INSTRUCCIONES", button_color=('black', 'indian red'), key="_instructivo_"), sg.Submit("AYUDA", key="_ayuda_")])
 
     @classmethod
     def dibujar(cls, grilla, config):
         cls.dibujar_botones(config)
         cls.dibujar_excluir()
         cls.instrucciones_ayuda()
-        [cls.layout.append(fila_grilla) for fila_grilla in grilla]
-        cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_")])
+        [cls.layout.append(fila_grilla)for fila_grilla in grilla]
+        cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_"), sg.Button('Salir', key="_salir_"),sg.Column(cls.columna_opciones)])
 
 
     @classmethod
@@ -117,7 +112,7 @@ class Juego():
 
         while True:
             evento, valores = ventana.Read()
-            if evento is None:
+            if (evento is None ):
                 break
             if evento in cls.lista_key_palabras:    # Seleccion de verb, adj, sus
                 lista_key_disable = cls.lista_key_palabras[:]
@@ -144,10 +139,10 @@ class Juego():
                     Notificacion.aviso(mensaje)
             elif evento == '_verificar_':
                 Validacion.ganar(config.palabras, cls.palabras_juego)
-            elif evento == '_ayuda_':
-                generar_layout_ayuda(config)
             elif evento == '_instructivo_':
                 Notificacion.instrucciones()
+            elif evento == '_ayuda_':
+                generar_layout_ayuda(config)
             elif evento == 'UNDO':
                 cls.habilitar_tipos(ventana)
                 cls.habilitar_letras(ventana,lista_letras_disabled)
