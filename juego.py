@@ -16,6 +16,8 @@ from utilidades import Validacion, Notificacion
 
 
 from constantes import LAYOUT_JUEGO
+from ventanaUsuario import BCOLOR, TEMPERATURA
+import json
 
 
 def generar_layout_ayuda(config):
@@ -89,15 +91,36 @@ class Juego():
 
     @classmethod
     def jugar(cls, valores, config):  #Juego principal
+        if(config.json_datos):
+
+            with open('datos_oficina.json.json','r') as file:
+                oficinas = json.load(file)
+
+            valores_temperatura = oficinas[config.oficina]
+            suma_temperaturas = 0
+            for  temperatura in valores_temperatura:
+                suma_temperaturas +=  temperatura["temp"]
+
+            promedio_temperatura = int(suma_temperaturas / len(valores_temperatura))
+
+            for valor in TEMPERATURA_COLOR.keys():
+                if promedio_temperatura in valor:
+                    color_letra = TEMPERATURA_COLOR[valor]
+
+                break
+
+        else:
+            color_letra = BCOLOR
+
         if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
-            grilla = generarGrillaVertical(dimension_grilla, palabras_ord)
+            grilla = generarGrillaVertical(dimension_grilla, palabras_ord, color_letra)
             cls.dibujar(grilla, config)
         else:
             dimension_grilla = dimensionGrillaHorizontal(config.palabras)
             palabras_ord = palabras_ordenadas_horizontal(config.palabras)
-            grilla = generarGrillaHorizontal(dimension_grilla, palabras_ord)
+            grilla = generarGrillaHorizontal(dimension_grilla, palabras_ord,color_letra)
             cls.dibujar(grilla, config)
 
         ventana = sg.Window('Sopa le letras').Layout(cls.layout)

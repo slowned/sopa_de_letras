@@ -6,6 +6,7 @@ from constantes import (
     AYUDA_COL,
     DIRECCION_COL,
     TAMANIO_COL,
+    OFICINAS_COL,
 )
 from utilidades import PALABRAS_TODAS
 
@@ -30,7 +31,7 @@ layout = [
     [sg.Text('_' * 100, size=(70, 1))],
     [sg.Text('Tipografia')],  # TODO
     [sg.Text('Estilo')],  # TODO
-    [sg.Text('Oficina')],  # TODO
+    [sg.Column(OFICINAS_COL)],  # TODO
     [sg.ReadButton('Jugar')],
 ]
 

@@ -9,6 +9,7 @@ import string
 
 
 
+
 __all__ = [
     'Configuracion',
     'Palabra',
@@ -127,7 +128,8 @@ class Configuracion():
         self.__errores = {}
         self.__keys = ""
         self.__tamanio = ""
-
+        self.json_datos = False
+        self.oficina = ""
     @property
     def errores(self):
         return self.__errores
@@ -251,8 +253,26 @@ class Configuracion():
 
         if '_tamanio_minuscula_' in opciones.keys():
             self.tamanio = True
+
         else:
             self.tamanio = False
+
+        if '__oficina1__' in opciones.keys():
+            self.oficina = 'oficina1'
+
+        elif '__oficina2__' in opciones.keys():
+            self.oficina = 'oficina2'
+
+        elif '__oficina3__' in opciones.keys():
+            self.oficina = 'oficina3'
+
+        elif '__oficina4__' in opciones.keys():
+            self.oficina = 'oficina4'
+
+        elif '__oficina5__' in opciones.keys():
+            self.oficina = 'oficina5'
+        else:
+            self.oficina = False
 
     def agregar_color(self, tipo, color):
         """
@@ -287,7 +307,7 @@ class Notificacion():
     @classmethod
     def instrucciones(cls):
         sg.Popup('Instructivo',
-        '1) Elegir el tipo de palabra a buscar:', 
+        '1) Elegir el tipo de palabra a buscar:',
         'SUSTANTIVO-VERBO-ADJETIVO',
         '2) Presionar sobre las letras hasta colorear la palabra',
         '3) Puede presionar el boton "Deshacer" si usted cree que se equivoco de letra/palabra',

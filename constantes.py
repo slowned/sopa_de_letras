@@ -27,7 +27,7 @@ AYUDA_NO = "_ayuda_no_"
 AYUDA_COL = [
     [sg.Text('Ayuda')],
     [sg.Radio('SI', "AYUDA", default=True, key=AYUDA_SI),
-        sg.Radio('NO', "AYUDA", key=AYUDA_NO)],
+    sg.Radio('NO', "AYUDA", key=AYUDA_NO)],
 ]
 
 DIRECCION = "direccion"
@@ -57,6 +57,17 @@ TIPO_PALABRAS_CANT = [
     [sg.Text('Sustantivos: '),
         sg.Spin(values=MAXIMO_PALABRA, initial_value='0', key=NOUN)],
 ]
+
+OFICINAS_COL = [
+    [sg.Text('Oficinas')],
+    [sg.Radio('NO', "OFICINA", default=True, key = '__oficina_No__'),
+    sg.Radio('1', "OFICINA", key='__oficina1__'),
+    sg.Radio('2', "OFICINA", key='__oficina2__'),
+    sg.Radio('3', "OFICINA", key='__oficina3__'),
+    sg.Radio('4', "OFICINA", key='__oficina4__'),
+    sg.Radio('5', "OFICINA", key='__oficina5__')],
+]
+
 
 # -------- Fin Elementos Opciones --------
 
