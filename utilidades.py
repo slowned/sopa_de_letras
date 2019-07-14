@@ -127,7 +127,7 @@ class Configuracion():
         self.__direccion = ""
         self.__errores = {}
         self.__keys = ""
-        self.__tamanio = ""
+        self.__tamanio = False
         self.json_datos = False
         self.oficina = ""
     @property
