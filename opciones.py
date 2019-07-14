@@ -7,6 +7,7 @@ from constantes import (
     DIRECCION_COL,
     TAMANIO_COL,
     OFICINAS_COL,
+    DIRECCION_COL,
 )
 from utilidades import PALABRAS_TODAS
 
@@ -28,7 +29,7 @@ layout = [
     [sg.Column(AYUDA_COL)],
     [sg.Column(TIPO_PALABRAS_CANT)],
     [sg.Column(TAMANIO_COL)],
-    [sg.Text('_' * 100, size=(70, 1))],
+    [sg.Column(DIRECCION_COL)],
     [sg.Text('Tipografia')],  # TODO
     [sg.Text('Estilo')],  # TODO
     [sg.Column(OFICINAS_COL)],  # TODO
