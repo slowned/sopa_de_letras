@@ -241,14 +241,14 @@ class Configuracion():
             if value is True:
                 opciones.update({key: value})
 
-        if '_ayuda_si_' in opciones.keys():
+        if '_ayuda_si' in opciones.keys():
             self.ayuda = True
-        elif '_ayuda_no_' in opciones.keys():
+        elif '_ayuda_no' in opciones.keys():
             self.ayuda = False
 
-        if '_direccion_vertical_' in opciones.keys():
+        if '_vertical_si' in opciones.keys():
             self.direccion = True
-        else:
+        elif '_vertical_no':
             self.direccion = False
 
         if '_tamanio_minuscula_' in opciones.keys():

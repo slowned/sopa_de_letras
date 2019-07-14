@@ -60,11 +60,11 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra):
     pos_fila = 0
     add=0
     while pos_fila < dim_fila:
-        key_letra = dim_columna * fila_palabra + add
+        key_letra = dim_fila * columna_palabra + add
         key = str(key_letra)
         if(pos_fila == palabra.posicion[1]):
             for letra in palabra.nombre:
-                key_letra = dim_columna * fila_palabra + add
+                key_letra = dim_fila * columna_palabra + add
                 key = str(key_letra)
                 letra_columna.append(sg.Button(letra,button_color = color_letra ,size=(4,1),key=key))
                 add += 1
