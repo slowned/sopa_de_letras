@@ -26,8 +26,10 @@ AYUDA_SI = "_ayuda_si_"
 AYUDA_NO = "_ayuda_no_"
 AYUDA_COL = [
     [sg.Text('Ayuda')],
-    [sg.Radio('SI', "AYUDA", default=True, key=AYUDA_SI),
-    sg.Radio('NO', "AYUDA", key=AYUDA_NO)],
+    [
+        sg.Radio('SI', "AYUDA", default=True, key=AYUDA_SI),
+        sg.Radio('NO', "AYUDA", key=AYUDA_NO)
+    ],
 ]
 
 DIRECCION = "direccion"
@@ -35,8 +37,10 @@ VERTICAL = "_vertical_si"
 HORIZONTAL = "_vertical_no"
 DIRECCION_COL = [
     [sg.Text('Orientacion Vertical/Horizontal')],
-    [sg.Radio('VERTICAL', "DIRECCION", default=True, key=VERTICAL),
-        sg.Radio('HORIZONTAL', "DIRECCION", key=HORIZONTAL)],
+    [
+        sg.Radio('HORIZONTAL', "DIRECCION", default=True, key=HORIZONTAL),
+        sg.Radio('VERTICAL', "DIRECCION", key=VERTICAL)
+    ],
 ]
 
 TAMANIO = "tamanio"

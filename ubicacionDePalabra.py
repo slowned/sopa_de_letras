@@ -6,7 +6,7 @@ from utilidades import *
     - Recibimos una Lista con las palabras listas para cargar en la Grilla
 """
 
-#IMPORTANTE: REEMPLAZAR len(palabras) por: palabra.longitud
+
 def dimensionGrillaHorizontal(lista_palabras):
     """
             ->Recibe una Lista de Objeto palabras
@@ -19,13 +19,18 @@ def dimensionGrillaHorizontal(lista_palabras):
             dim_columna = palabra.longitud
     return(dim_fila, dim_columna)
 
+
 def dimensionGrillaVertical(lista_palabras):
     """
                 ->Recibe una Lista de Objeto palabras
                 ->Retorna la dimension de grilla para ubicar palabras VERTICALMENTE
     """
-    columna, fila = dimensionGrillaHorizontal(lista_palabras)
-    return(fila, columna)
+    dim_fila = 0
+    dim_columna = len(lista_palabras)
+    for palabra in lista_palabras:
+        if palabra.longitud > dim_fila:
+            dim_fila = palabra.longitud
+    return(dim_fila, dim_columna)
 
 
 def generarPosicionHorizontal(palabra, dim_fila, dim_columna):
@@ -82,7 +87,7 @@ def listaPalabrasVertical(lista_palabras):
     for palabra in lista_palabras:
         generarPosicionVertical(palabra, fila, columna)
         posicion_palabra = palabra.posicion
-        while palabra.posicion[0] in lista_posicion:
+        while palabra.posicion[1] in lista_posicion:
             generarPosicionVertical(palabra, fila, columna)
             posicion_palabra = palabra.posicion
         lista_posicion.append(posicion_palabra[1])

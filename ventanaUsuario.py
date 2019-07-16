@@ -23,7 +23,6 @@ def letra_random(mayuscula):
     """
     alfabero = string.ascii_letters
     letra = random.choice(alfabero)
-    print(mayuscula)
     if  mayuscula:
         return letra.lower()
     else:
@@ -97,10 +96,12 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras, color_letra, confi
 
     grilla_sopa_letras = []
     for fila in range(dim_fila):
-        fila_grilla = elementos_fila(dim_columna,fila, lista_palabras[fila], color_letra, config)
+        fila_grilla = elementos_fila(
+            dim_columna, fila, lista_palabras[fila], color_letra, config)
         grilla_sopa_letras.append(fila_grilla)
 
     return grilla_sopa_letras
+
 
 def generarGrillaVertical(dimension_grilla, lista_palabras, color_letra, config):
     """
@@ -113,7 +114,10 @@ def generarGrillaVertical(dimension_grilla, lista_palabras, color_letra, config)
     columna_sopa = []
     grilla_sopa_letras = []
     for columna in range(dim_columna):
-        columna_sopa = elementos_columna(dim_fila,columna, lista_palabras[columna],color_letra, config)
+
+        columna_sopa = elementos_columna(
+            dim_fila, columna, lista_palabras[columna], color_letra, config)
+
         grilla_sopa_letras.append(columna_sopa)
 
     return grilla_sopa_letras

@@ -5,11 +5,6 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 import string
 
-
-
-
-
-
 __all__ = [
     'Configuracion',
     'Palabra',
@@ -110,6 +105,7 @@ ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
 
 PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
 
+
 class Configuracion():
     """
     clase de configuracion para la sopa de letras
@@ -130,6 +126,7 @@ class Configuracion():
         self.__tamanio = False
         self.json_datos = False
         self.oficina = ""
+
     @property
     def errores(self):
         return self.__errores
@@ -280,8 +277,7 @@ class Configuracion():
             color: color de cuando se va seleccionando la palabra
         """
         if color in self.colores.values():
-            # TODO: pop up NO PUEDE REPETIR LOS COLORES
-            mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tip[o de palabra")
+            mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tipo de palabra")
             Notificacion.aviso(mensaje)
         else:
             self.colores.update({tipo: color})
@@ -319,12 +315,12 @@ class Notificacion():
 class Validacion():
     wiki = WiktionaryParser
 
-
     @classmethod
     def validar_con_wikcionario(cls, palabra):
-        """:return (True, definicion)
-            False en caso que la palabra no se encuentre en
-            wikcionacio
+        """
+        :return (True, definicion)
+        False en caso que la palabra no se encuentre en
+        wikcionacio
         """
         try:
             palabra = str(palabra.lower())
@@ -339,31 +335,31 @@ class Validacion():
 
     @classmethod
     def validar_con_pattern(cls, palabra):
-        """ Retorna el tipo de la palabra
-            verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
-            -------------------
-            Al instanciar una palabra se valida con pattern en tipo (Verbo, Sustantivo, Adjetivo)
-            ------------------
+        """ 
+        Retorna el tipo de la palabra
+        verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
+        -------------------
+        Al instanciar una palabra se valida con pattern en tipo (Verbo, Sustantivo, Adjetivo)
+        ------------------
         """
         pass
 
     @classmethod
     def ganar(cls, palabras_ganar, seleccionadas):
-        """ Verifica si las palabras seleccionadas por el jugador
-            coinciden con las palabras elejeridas por la profesora.
         """
-        # print(palabras_ganar)  # lista Palabras
-        # print(seleccionadas)  # { ver: [], susb: [], adj: [] }
+        Verifica si las palabras seleccionadas por el jugador
+        coinciden con las palabras elejeridas por la profesora.
+        """
 
-        faltantes = [palabra.nombre for palabra in palabras_ganar]
+        faltantes = [palabra.nombre.upper() for palabra in palabras_ganar]
 
         bien = 0
         correctas = []
         for palabra in palabras_ganar:
-            if palabra.tipo in seleccionadas[palabra.tipo]:
+            if palabra.nombre.upper() in seleccionadas[palabra.tipo]:
                 bien += 1
                 correctas.append(palabra.nombre)
-                faltantes.remove(palabra)
+                faltantes.remove(palabra.nombre.upper())
 
         if len(palabras_ganar) == bien:
             sg.Popup('GANASTE',
@@ -382,8 +378,6 @@ class Validacion():
         """ Controla que sustantivos, adjetivos y verbos
             tengan un color asociado
         """
-        print(dict_colores)
-        print(len(dict_colores))
         if len(dict_colores) == 3:
             return True
         return False
