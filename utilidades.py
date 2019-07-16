@@ -319,12 +319,12 @@ class Notificacion():
 class Validacion():
     wiki = WiktionaryParser
 
-
     @classmethod
     def validar_con_wikcionario(cls, palabra):
-        """:return (True, definicion)
-            False en caso que la palabra no se encuentre en
-            wikcionacio
+        """
+        :return (True, definicion)
+        False en caso que la palabra no se encuentre en
+        wikcionacio
         """
         try:
             palabra = str(palabra.lower())
@@ -339,21 +339,21 @@ class Validacion():
 
     @classmethod
     def validar_con_pattern(cls, palabra):
-        """ Retorna el tipo de la palabra
-            verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
-            -------------------
-            Al instanciar una palabra se valida con pattern en tipo (Verbo, Sustantivo, Adjetivo)
-            ------------------
+        """ 
+        Retorna el tipo de la palabra
+        verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
+        -------------------
+        Al instanciar una palabra se valida con pattern en tipo (Verbo, Sustantivo, Adjetivo)
+        ------------------
         """
         pass
 
     @classmethod
     def ganar(cls, palabras_ganar, seleccionadas):
-        """ Verifica si las palabras seleccionadas por el jugador
-            coinciden con las palabras elejeridas por la profesora.
         """
-        # print(palabras_ganar)  # lista Palabras
-        # print(seleccionadas)  # { ver: [], susb: [], adj: [] }
+        Verifica si las palabras seleccionadas por el jugador
+        coinciden con las palabras elejeridas por la profesora.
+        """
 
         faltantes = [palabra.nombre for palabra in palabras_ganar]
 
@@ -382,8 +382,6 @@ class Validacion():
         """ Controla que sustantivos, adjetivos y verbos
             tengan un color asociado
         """
-        print(dict_colores)
-        print(len(dict_colores))
         if len(dict_colores) == 3:
             return True
         return False
