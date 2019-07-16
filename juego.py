@@ -114,13 +114,15 @@ class Juego():
 
         if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
+            print('dimesion de la grilla {}'.format(dimension_grilla))
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
             grilla = generarGrillaVertical(dimension_grilla, palabras_ord, color_letra, config)
             cls.dibujar(grilla, config)
         else:
             dimension_grilla = dimensionGrillaHorizontal(config.palabras)
+            print('dimesion de la grilla {}'.format(dimension_grilla))
             palabras_ord = palabras_ordenadas_horizontal(config.palabras)
-            grilla = generarGrillaHorizontal(dimension_grilla, palabras_ord,color_letra, config)
+            grilla = generarGrillaHorizontal(dimension_grilla, palabras_ord, color_letra, config)
             cls.dibujar(grilla, config)
 
         ventana = sg.Window('Sopa le letras').Layout(cls.layout)

@@ -130,6 +130,7 @@ class Configuracion():
         self.__tamanio = False
         self.json_datos = False
         self.oficina = ""
+
     @property
     def errores(self):
         return self.__errores
