@@ -5,11 +5,6 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 import string
 
-
-
-
-
-
 __all__ = [
     'Configuracion',
     'Palabra',
@@ -109,6 +104,7 @@ SUSTANTIVOS = [Palabra(sus, 'def') for sus in SUSTANTIVOS]
 ADJETIVOS = [Palabra(sus, 'def') for sus in ADJETIVOS]
 
 PALABRAS_TODAS = {VERB: VERBOS, ADJECTIVE: ADJETIVOS, NOUN: SUSTANTIVOS}
+
 
 class Configuracion():
     """
@@ -281,8 +277,7 @@ class Configuracion():
             color: color de cuando se va seleccionando la palabra
         """
         if color in self.colores.values():
-            # TODO: pop up NO PUEDE REPETIR LOS COLORES
-            mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tip[o de palabra")
+            mensaje = ("ERROR", "Tenes que elejir un color distinto para cada tipo de palabra")
             Notificacion.aviso(mensaje)
         else:
             self.colores.update({tipo: color})
@@ -356,15 +351,15 @@ class Validacion():
         coinciden con las palabras elejeridas por la profesora.
         """
 
-        faltantes = [palabra.nombre for palabra in palabras_ganar]
+        faltantes = [palabra.nombre.upper() for palabra in palabras_ganar]
 
         bien = 0
         correctas = []
         for palabra in palabras_ganar:
-            if palabra.tipo in seleccionadas[palabra.tipo]:
+            if palabra.nombre.upper() in seleccionadas[palabra.tipo]:
                 bien += 1
                 correctas.append(palabra.nombre)
-                faltantes.remove(palabra)
+                faltantes.remove(palabra.nombre.upper())
 
         if len(palabras_ganar) == bien:
             sg.Popup('GANASTE',

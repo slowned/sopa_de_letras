@@ -114,13 +114,11 @@ class Juego():
 
         if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
-            print('dimesion de la grilla {}'.format(dimension_grilla))
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
             grilla = generarGrillaVertical(dimension_grilla, palabras_ord, color_letra, config)
             cls.dibujar(grilla, config)
         else:
             dimension_grilla = dimensionGrillaHorizontal(config.palabras)
-            print('dimesion de la grilla {}'.format(dimension_grilla))
             palabras_ord = palabras_ordenadas_horizontal(config.palabras)
             grilla = generarGrillaHorizontal(dimension_grilla, palabras_ord, color_letra, config)
             cls.dibujar(grilla, config)
@@ -154,7 +152,7 @@ class Juego():
                 ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
             elif evento == '_agregar_':
                 if palabra and tipo_palabra:
-                    cls.palabras_juego[tipo_palabra].append(palabra)
+                    cls.palabras_juego[tipo_palabra].append(palabra.upper())
                     palabra = ''
                     cls.habilitar_tipos(ventana)
                     lista_letras_disabled = []
@@ -163,6 +161,12 @@ class Juego():
                     cls.habilitar_tipos(ventana)
                     Notificacion.aviso(mensaje)
             elif evento == '_verificar_':
+
+                print('palabras a completar')
+                print(config.palabras)
+                print('palabras seleccionadas por el usuario')
+                print(cls.palabras_juego)
+
                 Validacion.ganar(config.palabras, cls.palabras_juego)
             elif evento == '_instructivo_':
                 Notificacion.instrucciones()
