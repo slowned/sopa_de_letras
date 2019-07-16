@@ -176,4 +176,6 @@ class Juego():
                 cls.habilitar_tipos(ventana)
                 cls.habilitar_letras(ventana,lista_letras_disabled)
                 lista_letra_disabled=[]
+            elif evento == '_salir_':
+                ventana.Close()
         ventana.Close()
