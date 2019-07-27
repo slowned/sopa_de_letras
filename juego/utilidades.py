@@ -14,6 +14,10 @@ __all__ = [
 
 
 class Palabra():
+    """
+    Clase que representa las palabras agregadas
+    desde las opciones
+    """
     def __init__(self, nombre, definicion):
         self.__nombre = nombre
         self.__definicion = definicion
@@ -286,6 +290,9 @@ class Configuracion():
 
 
 class Notificacion():
+    """
+    Clase encargada de mostrar errores y pop ups
+    """
     @classmethod
     def aviso(cls, mensaje):
         """

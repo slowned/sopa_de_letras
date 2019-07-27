@@ -157,6 +157,7 @@ class Juego():
                 palabra = ''
                 tipo_palabra = evento
             elif evento in config.keys and generando:
+                # se va creando la palabra
                 letra = ventana.Element(evento).ButtonText
                 lista_letras_disabled.append(evento)
                 palabra += letra
