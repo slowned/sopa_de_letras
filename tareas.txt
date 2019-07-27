@@ -1,0 +1,44 @@
+			Juan:	
+				-> Cuando se realiza verificar mostrar botones de VOLVER  A CONFIGURACION, REINTENTAR
+				* Reintentar: resetear las palabras que se fueron agregando( cls.palabras_juego())
+			
+				-> Agragar aventos: 
+				- Limpiar PALABRA( elimina la ultima palabra) 
+				- Limpiar Pantalla( eLimina todo lo ingresa)
+			
+
+			Mariano:
+
+				-> Realizar Reporte de las difirencias encontradas
+					- Agregar Botton en opciones para ver el REPORTE(PopUp)
+				
+				-> PopUp de verficacion de salida
+					- Consulta si esta seguro salir del juego
+
+				-> Al elegir tipo de palabra a ingresar deshabilitar las opciones: 
+					- SALIR 
+					- VERIFICAR
+			
+			Marx:
+				
+				-> Tipografia Titulo y Texto
+					Agregar a la clase configuracion un diccionario con el tipo de tipografia:
+						- Titulo
+						- Texto
+
+				-> Grilla por Default
+					- Agregamos mas 2 a las dimension de la tabla
+
+				-> Corregior Posicion Vertical
+
+
+
+		==========================================
+				Dato de Color
+		==========================================
+		-> Organizo en una estructura de directorios el codigo: Si, serapo por archivo de forma modular por funcionalidad (Status: OK)
+
+		-> Documento:  Si, pero no en todos los archivos
+				"Cada codigo debe ser documentado por el que lo haga"
+	
+		
