@@ -2,7 +2,7 @@ import os
 import string
 import random
 import PySimpleGUI as sg
-from utilidades import *
+from .utilidades import *
 
 BCOLOR=('deep pink','peach puff')
 TEMPERATURA=  {range(0,10):('turquoiose2','cyan4'),range(10,18):('OliveDrab1','OliveDrab4'), range(18,30):('DarkOrange1','OrangeRed3')}

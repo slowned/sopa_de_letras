@@ -1,22 +1,22 @@
 import PySimpleGUI as sg
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
-from ubicacionDePalabra import (
+from .ubicacionDePalabra import (
         palabras_ordenadas_horizontal,
         palabras_ordenadas_vertical,
         dimensionGrillaVertical,
         dimensionGrillaHorizontal,
 )
 
-from ventanaUsuario import (
+from .ventanaUsuario import (
         generarGrillaVertical,
         generarGrillaHorizontal,
 )
 
-from utilidades import Validacion, Notificacion
+from .utilidades import Validacion, Notificacion
 
 
-from constantes import LAYOUT_JUEGO
-from ventanaUsuario import BCOLOR, TEMPERATURA
+from .constantes import LAYOUT_JUEGO
+from .ventanaUsuario import BCOLOR, TEMPERATURA
 import json
 
 
@@ -88,9 +88,13 @@ class Juego():
         [cls.layout.append(fila_grilla)for fila_grilla in grilla]
         cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_"), sg.Button('Salir', key="_salir_"),sg.Column(cls.columna_opciones)])
 
-
     @classmethod
     def jugar(cls, valores, config):  #Juego principal
+        """
+        Se encarga de instanciar la sopa de letras, dependiendo de las
+        opciones seleccionadas, y controla el flujo del juego.
+        """
+        # datos de temperatura para rapsberry
         if(config.json_datos):
 
             with open('datos_oficina.json.json','r') as file:
@@ -99,7 +103,7 @@ class Juego():
             valores_temperatura = oficinas[config.oficina]
             suma_temperaturas = 0
             for  temperatura in valores_temperatura:
-                suma_temperaturas +=  temperatura["temp"]
+                suma_temperaturas += temperatura["temp"]
 
             promedio_temperatura = int(suma_temperaturas / len(valores_temperatura))
 
@@ -112,6 +116,9 @@ class Juego():
         else:
             color_letra = BCOLOR
 
+
+        #TODO: agregarle +2 (columna y fila)
+        # dibuja los layouts
         if config.direccion is True:  # direccion por defaul es vertical
             dimension_grilla = dimensionGrillaVertical(config.palabras)
             palabras_ord = palabras_ordenadas_vertical(config.palabras)
@@ -131,13 +138,17 @@ class Juego():
         generando = False
 
         palabra = ''
-        lista_letras_disabled=[]
+        lista_letras_disabled = []
 
         while True:
             evento, valores = ventana.Read()
-            if (evento is None ):
+            if (evento is None):
                 break
+            # TODO: Agregar eventos ("clean_window", "clean_word")
+            # seleccion de palabra
             if evento in cls.lista_key_palabras:    # Seleccion de verb, adj, sus
+                #TODO: desactivar boton "salir" y "verificar"
+
                 lista_key_disable = cls.lista_key_palabras[:]
                 lista_key_disable.remove(evento)
                 for elemento in lista_key_disable:
@@ -161,12 +172,8 @@ class Juego():
                     cls.habilitar_tipos(ventana)
                     Notificacion.aviso(mensaje)
             elif evento == '_verificar_':
-
-                print('palabras a completar')
-                print(config.palabras)
-                print('palabras seleccionadas por el usuario')
-                print(cls.palabras_juego)
-
+                # TODO: dentro del pop up "ganaste/perdiste" agrerar 2 botones
+                # volver a configuraciones, reintentar
                 Validacion.ganar(config.palabras, cls.palabras_juego)
             elif evento == '_instructivo_':
                 Notificacion.instrucciones()
@@ -177,5 +184,6 @@ class Juego():
                 cls.habilitar_letras(ventana,lista_letras_disabled)
                 lista_letra_disabled=[]
             elif evento == '_salir_':
+                # TODO PopUP estas seguro?
                 ventana.Close()
         ventana.Close()

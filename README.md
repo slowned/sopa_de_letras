@@ -1,5 +1,5 @@
 # sopa_de_letras
-* Para iniciar el juego se debe correr el script opciones
+* Para iniciar el juego se debe correr el script "main.py"
 ```console
 python3 opciones.py
 ```

@@ -1,6 +1,6 @@
 import string
 import PySimpleGUI as sg
-from utilidades import Palabra, Configuracion
+from .utilidades import Palabra, Configuracion
 
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 

@@ -1,5 +1,5 @@
 from random import randint
-from utilidades import *
+from .utilidades import *
 
 """
     - Funciones para generar ubicacion aleatorio de las palabras

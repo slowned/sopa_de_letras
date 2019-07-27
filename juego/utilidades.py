@@ -110,6 +110,7 @@ class Configuracion():
     """
     clase de configuracion para la sopa de letras
     """
+    # TODO: Agregar property(getter, setter) tipografia
 
     __palabras_todas = {NOUN: [], VERB: [], ADJECTIVE: []}
     # __palabras_todas = PALABRAS_TODAS
@@ -126,6 +127,7 @@ class Configuracion():
         self.__tamanio = False
         self.json_datos = False
         self.oficina = ""
+
 
     @property
     def errores(self):
@@ -298,6 +300,8 @@ class Notificacion():
         genera reporte de palabras no existentes
         """
         reporte = open("reporte.txt", "a+")
+        # TODO: generar reporte mas claro.. la palabra tal no existe en wiki
+        # comparar con patter, dar un poco de informacion
         reporte.write(palabra)
 
     @classmethod
