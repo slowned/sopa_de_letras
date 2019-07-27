@@ -160,7 +160,7 @@ class Juego():
                 letra = ventana.Element(evento).ButtonText
                 lista_letras_disabled.append(evento)
                 palabra += letra
-                ventana.Element(evento).Update(button_color=(('white', ('red', 'blue')[True])))
+                ventana.Element(evento).Update(button_color=(('white', ('red', config.colores[tipo_palabra])[True])))
             elif evento == '_agregar_':
                 if palabra and tipo_palabra:
                     cls.palabras_juego[tipo_palabra].append(palabra.upper())
