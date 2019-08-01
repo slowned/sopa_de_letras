@@ -21,7 +21,6 @@ class Opcion():
         AGREGAR = 'Agregar'
         JUGAR = 'Jugar'
 
-        
         layout = [
             [sg.Text('Configuraciones', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
             [sg.Text('Ingrese una a una las palabras a encontrar')],

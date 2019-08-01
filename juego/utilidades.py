@@ -2,7 +2,9 @@ import random
 import PySimpleGUI as sg
 from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
+# En las dos primeras entregas usamos una libreria erronea Wiktionaryparser
 from wiktionaryparser import WiktionaryParser
+from pattern.web import Wikia, Wiktionary
 import string
 
 __all__ = [
@@ -306,10 +308,13 @@ class Notificacion():
         """
         genera reporte de palabras no existentes
         """
+        #archivo = open("reporte.txt", "x")
         reporte = open("reporte.txt", "a+")
         # TODO: generar reporte mas claro.. la palabra tal no existe en wiki
         # comparar con patter, dar un poco de informacion
-        reporte.write(palabra)
+        linea = "* La palabra ingresada \"{}\" no puedo valirdarse con wiktionario \n".format(palabra)
+        reporte.write(linea)
+        reporte.close()
 
     @classmethod
     def instrucciones(cls):
@@ -324,7 +329,8 @@ class Notificacion():
 
 
 class Validacion():
-    wiki = WiktionaryParser
+    wiki2 = WiktionaryParser
+    wiki = Wiktionary(language="es")
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
@@ -333,16 +339,17 @@ class Validacion():
         False en caso que la palabra no se encuentre en
         wikcionacio
         """
-        try:
-            palabra = str(palabra.lower())
-            word = cls.wiki().fetch(palabra, "spanish")
-            if word[0].get('definitions'):
-                definicion = word[0].get('definitions')
-                return palabra, definicion
-        except:
-            print("Error inesperado al consultar con wikcionario")
-
+        palabra = str(palabra.lower())
+        word = Wiktionary(palabra, language="es")
+        if hasattr(word, "sections"):
+            esp = palabra.sections[1]
+            definition = esp.children[0].string
+            return palabra, definition
         return False, False
+
+
+
+        
 
     @classmethod
     def validar_con_pattern(cls, palabra):
