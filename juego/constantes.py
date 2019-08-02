@@ -9,7 +9,7 @@ MAXIMO_PALABRA = [x for x in range(10)]
 
 LAYOUT_AYUDA = []
 LAYOUT_JUEGO = [
-    [sg.Text('Sopa de letras', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
+    # [sg.Text('Sopa de letras', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
 ]
 
 # valores.get('opciones')

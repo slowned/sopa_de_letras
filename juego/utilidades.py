@@ -131,7 +131,8 @@ class Configuracion():
         self.__tamanio = False
         self.json_datos = False
         self.oficina = ""
-
+        self.tipografia_titulo = ("Helvetica",18)
+        self.tipografia_texto = ("Helvetica",12)
 
     @property
     def errores(self):
@@ -202,6 +203,7 @@ class Configuracion():
     def tamanio(self, tamanio):
         self.__tamanio = tamanio
 
+
     def seleccionar_palabras(self, evento):
         """ llega un diccionario con la cantidad de palabras
             verbos:3, adjetivos:2, sustantivos:1
@@ -260,6 +262,7 @@ class Configuracion():
         else:
             self.tamanio = False
 
+
         if '__oficina1__' in opciones.keys():
             self.oficina = 'oficina1'
 
@@ -287,6 +290,20 @@ class Configuracion():
             Notificacion.aviso(mensaje)
         else:
             self.colores.update({tipo: color})
+
+    def agregar_tipo_titulo(self, tipografia):
+        """
+            input = [tipografia, tamanio]
+        """
+        if len(tipografia) != 0:
+            self.tipografia_titulo = tipografia
+
+    def agregar_tipo_texto(self, tipografia):
+        """
+            input = [tipografia, tamanio]
+        """
+        if len(tipografia) != 0:
+            self.tipografia_texto = tipografia
 
 
 class Notificacion():
@@ -346,7 +363,7 @@ class Validacion():
 
     @classmethod
     def validar_con_pattern(cls, palabra):
-        """ 
+        """
         Retorna el tipo de la palabra
         verbo(VB=verb), adjetivo(JJ=adjetive), sustantivo(NN=noun)
         -------------------

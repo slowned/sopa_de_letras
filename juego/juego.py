@@ -44,6 +44,7 @@ def layout_instructivo():
     """
     pass
 
+
 class Juego():
 
     layout = LAYOUT_JUEGO
@@ -94,6 +95,8 @@ class Juego():
         Se encarga de instanciar la sopa de letras, dependiendo de las
         opciones seleccionadas, y controla el flujo del juego.
         """
+        #agregamos el Layout titlo con la tipografia elegida
+        cls.layout.append([sg.Text('Sopa de letras', size=(30, 1), font=config.tipografia_titulo , text_color='blue')])
         # datos de temperatura para rapsberry
         if(config.json_datos):
 
