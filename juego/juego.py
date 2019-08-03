@@ -17,6 +17,7 @@ from .utilidades import Validacion, Notificacion
 
 from .constantes import LAYOUT_JUEGO
 from .ventanaUsuario import BCOLOR, TEMPERATURA
+from .opciones import *
 import json
 
 
@@ -102,6 +103,23 @@ class Juego():
                 sg.Column(cls.columna_opciones)
             ]
         )
+    @classmethod
+    def salir(cls, ventana):
+        layout = [
+            [sg.Button('Salir', key='salir_si'),
+                # sg.Button('Cancelar', key='salir_no'),
+                sg.Cancel(key='salir_no')]
+        ]
+        salir = sg.Window("salir del juego").Layout(layout)
+
+        while True:
+            event, values = salir.Read(timeout=0)
+            if event == 'salir_si':
+                return True, salir
+            elif event == 'salir_no':
+                return False, salir
+            elif event is None:
+                return False, salir
 
     @classmethod
     def jugar(cls, valores, config):  # Juego principal
@@ -158,7 +176,9 @@ class Juego():
         lista_letras_disabled = []
 
         while True:
+            print('pedir valores')
             evento, valores = ventana.Read()
+            print(evento)
             if (evento is None):
                 break
             # TODO: Agregar eventos ("clean_window", "clean_word")
@@ -206,32 +226,15 @@ class Juego():
                 cls.habilitar_tipos(ventana)
                 cls.habilitar_letras(ventana,lista_letras_disabled)
                 lista_letra_disabled=[]
+            elif evento is None:
+                break
             elif evento == '_salir_':
-                # TODO PopUP estas seguro?
-                #sg.Popup(
-                #    'Estas seguro que quiere salir',
-                #    valores,
-                #    evento,
-                #    #[
-                #    #    sg.Button('Salir', key='salir_si'),
-                #    #    sg.Button('Cancelar', key='salir_no'),
-                #    #],
-                #)
-                #ventana.Close()
-                layout = [
-                    [sg.Button('Salir', key='salir_si'),
-                        # sg.Button('Cancelar', key='salir_no'),
-                        sg.Cancel()]
-                ]
-                salir = sg.Window("salir del juego").Layout(layout)
-                while True:
-                    evento, valores = salir.Read(timeout=0)
-                    if evento == 'salir_si':
-                        salir.Close()
-                        ventana.Close()
-                        break
-                    elif evento == 'salir_no':
-                        #salir.Close()
-                        break
+                salir, vent = cls.salir(ventana)
+                if salir is True:
+                    vent.Close()
+                    ventana.Close()
+                else:
+                    vent.Close()
+                print('cancelo salir')
 
         ventana.Close()

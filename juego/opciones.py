@@ -13,7 +13,9 @@ from juego.constantes import (
 from .utilidades import PALABRAS_TODAS
 
 from .utilidades import *
-from .juego import Juego
+from juego.juego import Juego
+
+__all__ = ['Opcion']
 
 
 class Opcion():
