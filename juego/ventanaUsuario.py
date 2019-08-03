@@ -37,7 +37,8 @@ def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
     pos_columna = 0
     add = 0
     indice = dim_columna * fila_palabra
-    while pos_columna < dim_columna:
+    #Agragamos 3 columnas
+    while pos_columna < (dim_columna +3):
         if pos_columna == palabra.posicion[1]:
             for letra in palabra.nombre:
                 key_letra = indice + add
@@ -63,7 +64,8 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
     letra_columna = []
     pos_fila = 0
     add=0
-    while pos_fila < dim_fila:
+    #agregando aqui 3 filas
+    while pos_fila < (dim_fila+3):
         key_letra = dim_fila * columna_palabra + add
         key = str(key_letra)
         if(pos_fila == palabra.posicion[1]):
@@ -99,6 +101,10 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras, color_letra, confi
         fila_grilla = elementos_fila(
             dim_columna, fila, lista_palabras[fila], color_letra, config)
         grilla_sopa_letras.append(fila_grilla)
+        
+    #adicionamos  3 filas mas
+    # for i in range(3):
+        #grilla_sopa_letras.append([sg.Button(letra_random(config.tamanio),font=config.tipografia_texto,button_color = color_letra, size=(4,1), key=key)])
 
     return grilla_sopa_letras
 
