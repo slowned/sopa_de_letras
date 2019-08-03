@@ -51,6 +51,8 @@ class Juego():
     lista_key_palabras = [NOUN, VERB, ADJECTIVE]
     palabras_juego = {VERB: [], NOUN: [], ADJECTIVE: []}
 
+    action_keys = ['_verificar_', '_salir_']
+
     # TODO: crear metodo de clase para que habilite los tipo de palabras
     # y otro para que despinte de las letras cuando sale un popup de error
 
@@ -60,8 +62,13 @@ class Juego():
             ventana.Element(elemento).Update(disabled=False)
 
     @classmethod
-    def habilitar_letras(cls,ventana,lista_letras):
-        BCOLOR=('deep pink','peach puff')
+    def habilitar_acciones(cls, ventana):
+        for elemento in cls.action_keys:
+            ventana.Element(elemento).Update(disabled=False)
+
+    @classmethod
+    def habilitar_letras(cls, ventana, lista_letras):
+        BCOLOR=('deep pink', 'peach puff')
         for letra in lista_letras:
             ventana.Element(letra).Update(button_color=BCOLOR)
 
@@ -85,11 +92,18 @@ class Juego():
         cls.dibujar_botones(config)
         cls.dibujar_excluir()
         cls.instrucciones_ayuda()
-        [cls.layout.append(fila_grilla)for fila_grilla in grilla]
-        cls.layout.append([sg.Submit("Verificar", key="_verificar_"), sg.Button('Agregar', key="_agregar_"), sg.Button('Salir', key="_salir_"),sg.Column(cls.columna_opciones)])
+        [cls.layout.append(fila_grilla) for fila_grilla in grilla]
+        cls.layout.append(
+            [
+                sg.Submit("Verificar", key="_verificar_"),
+                sg.Button('Agregar', key="_agregar_"),
+                sg.Button('Salir', key="_salir_"),
+                sg.Column(cls.columna_opciones)
+            ]
+        )
 
     @classmethod
-    def jugar(cls, valores, config):  #Juego principal
+    def jugar(cls, valores, config):  # Juego principal
         """
         Se encarga de instanciar la sopa de letras, dependiendo de las
         opciones seleccionadas, y controla el flujo del juego.
@@ -97,7 +111,7 @@ class Juego():
         # datos de temperatura para rapsberry
         if(config.json_datos):
 
-            with open('datos_oficina.json.json','r') as file:
+            with open('datos_oficina.json.json', 'r') as file:
                 oficinas = json.load(file)
 
             valores_temperatura = oficinas[config.oficina]
@@ -151,8 +165,12 @@ class Juego():
 
                 lista_key_disable = cls.lista_key_palabras[:]
                 lista_key_disable.remove(evento)
+
                 for elemento in lista_key_disable:
                     ventana.Element(elemento).Update(disabled=True)
+                for elemento in cls.action_keys:
+                    ventana.Element(elemento).Update(disabled=True)
+
                 generando = True
                 palabra = ''
                 tipo_palabra = evento
@@ -167,6 +185,7 @@ class Juego():
                     cls.palabras_juego[tipo_palabra].append(palabra.upper())
                     palabra = ''
                     cls.habilitar_tipos(ventana)
+                    cls.habilitar_acciones(ventana)
                     lista_letras_disabled = []
                 else:
                     mensaje = ("Error", "Debe pintar una palabra antes de agregarla")
@@ -186,5 +205,30 @@ class Juego():
                 lista_letra_disabled=[]
             elif evento == '_salir_':
                 # TODO PopUP estas seguro?
-                ventana.Close()
+                #sg.Popup(
+                #    'Estas seguro que quiere salir',
+                #    valores,
+                #    evento,
+                #    #[
+                #    #    sg.Button('Salir', key='salir_si'),
+                #    #    sg.Button('Cancelar', key='salir_no'),
+                #    #],
+                #)
+                #ventana.Close()
+                layout = [
+                    [sg.Button('Salir', key='salir_si'),
+                        # sg.Button('Cancelar', key='salir_no'),
+                        sg.Cancel()]
+                ]
+                salir = sg.Window("salir del juego").Layout(layout)
+                while True:
+                    evento, valores = salir.Read(timeout=0)
+                    if evento == 'salir_si':
+                        salir.Close()
+                        ventana.Close()
+                        break
+                    elif evento == 'salir_no':
+                        #salir.Close()
+                        break
+
         ventana.Close()
