@@ -29,7 +29,7 @@ def letra_random(mayuscula):
         return letra.upper()
 
 def crear_boton(config):
-    btn = [sg.Button(letra_random(config.tamanio), button_color=('white', 'green'), size=(4,1))]
+    btn = [sg.Button(letra_random(config.tamanio),font=config.tipografia_texto, button_color=('white', 'green'), size=(4,1))]
     return btn
 
 def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
@@ -37,7 +37,8 @@ def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
     pos_columna = 0
     add = 0
     indice = dim_columna * fila_palabra
-    while pos_columna < dim_columna:
+    #Agragamos 3 columnas
+    while pos_columna < (dim_columna +3):
         if pos_columna == palabra.posicion[1]:
             for letra in palabra.nombre:
                 key_letra = indice + add
@@ -46,14 +47,14 @@ def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
                     letra = letra.lower()
                 else:
                     letra = letra.upper()
-                letras_fila.append(sg.Button(letra,button_color=(color_letra), size=(4,1), key=key))
+                letras_fila.append(sg.Button(letra,button_color=(color_letra),font=config.tipografia_texto, size=(4,1), key=key))
                 add += 1
             #pos_columna+= diccionario_palabras[lista_palabras[i]][0]
             pos_columna += palabra.longitud
         else:
             key_letra = indice + add
             key = str(key_letra)
-            letras_fila.append(sg.Button(letra_random(config.tamanio),button_color = color_letra, size=(4,1), key=key))
+            letras_fila.append(sg.Button(letra_random(config.tamanio),font=config.tipografia_texto,button_color = color_letra, size=(4,1), key=key))
             pos_columna += 1
             add += 1
     return letras_fila
@@ -63,7 +64,8 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
     letra_columna = []
     pos_fila = 0
     add=0
-    while pos_fila < dim_fila:
+    #agregando aqui 3 filas
+    while pos_fila < (dim_fila+3):
         key_letra = dim_fila * columna_palabra + add
         key = str(key_letra)
         if(pos_fila == palabra.posicion[1]):
@@ -74,11 +76,11 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
                     letra = letra.lower()
                 else:
                     letra = letra.upper()
-                letra_columna.append(sg.Button(letra,button_color = color_letra ,size=(4,1),key=key))
+                letra_columna.append(sg.Button(letra,button_color = color_letra, font=config.tipografia_texto ,size=(4,1),key=key))
                 add += 1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random(config.tamanio), button_color = color_letra,size=(4,1),key=key))
+            letra_columna.append(sg.Button(letra_random(config.tamanio), font=config.tipografia_texto ,button_color = color_letra,size=(4,1),key=key))
             pos_fila += 1
             add+=1
     return letra_columna
@@ -99,6 +101,10 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras, color_letra, confi
         fila_grilla = elementos_fila(
             dim_columna, fila, lista_palabras[fila], color_letra, config)
         grilla_sopa_letras.append(fila_grilla)
+        
+    #adicionamos  3 filas mas
+    # for i in range(3):
+        #grilla_sopa_letras.append([sg.Button(letra_random(config.tamanio),font=config.tipografia_texto,button_color = color_letra, size=(4,1), key=key)])
 
     return grilla_sopa_letras
 

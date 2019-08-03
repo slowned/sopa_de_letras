@@ -63,7 +63,7 @@ def listaPalabrasHorizontal(lista_palabras):
         -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion HORIZONTAL
     """
     lista_palabras_posicion = []
-    fila, columna = dimensionGrillaHorizontal(lista_palabras)
+    fila, columna=  dimensionGrillaHorizontal(lista_palabras)
     lista_posicion = []
     for palabra in lista_palabras:
         generarPosicionHorizontal(palabra, fila, columna)
@@ -82,7 +82,8 @@ def listaPalabrasVertical(lista_palabras):
         -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion VERTICAL
     """
     lista_palabras_posicion = []
-    fila, columna = dimensionGrillaVertical(lista_palabras)
+    # fila, columna = dimensionGrillaVertical(lista_palabras)(creo q aqui es al reves)
+    fila, columna= dimensionGrillaVertical(lista_palabras)
     lista_posicion = []
     for palabra in lista_palabras:
         generarPosicionVertical(palabra, fila, columna)

@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 from juego.elegirColores import paleta_colores
+from juego.tipografia import tipo_letra
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from juego.constantes import (
     TIPO_PALABRAS_CANT,
@@ -31,7 +32,8 @@ class Opcion():
             [sg.Column(TIPO_PALABRAS_CANT)],
             [sg.Column(TAMANIO_COL)],
             [sg.Column(DIRECCION_COL)],
-            [sg.Text('Tipografia')],  # TODO titulo y texto
+            [sg.Button('Tipografia Título', key = '__titulo__')],
+            [sg.Button('Tipografia Texto', key = '__texto__')],  # TODO titulo y texto
             [sg.Text('Estilo')],  # TODO
             [sg.Column(OFICINAS_COL)],  # TODO
             [sg.ReadButton('Jugar')],
@@ -97,6 +99,16 @@ class Opcion():
                 else:
                     mensaje =("Error"," El color fue seleccionado")
                     Notificacion.aviso(mensaje)
+
+            #-----Agregamos Tipografia
+            elif evento == '__titulo__':
+                t_titulo = tipo_letra("Titulo")
+                print(t_titulo)
+
+            elif evento == '__texto__':
+                t_texto = tipo_letra("Texto")
+                print(t_texto)
+
 
             elif evento == JUGAR:
                 if Validacion.verificar_colores(config.colores):
