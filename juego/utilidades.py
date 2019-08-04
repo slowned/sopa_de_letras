@@ -9,7 +9,7 @@ __all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
-    'Notificacion'
+    'Notificacion',
 ]
 
 
@@ -206,7 +206,7 @@ class Configuracion():
 
     def seleccionar_palabras(self, evento):
         """ llega un diccionario con la cantidad de palabras
-            verbos:3, adjetivos:2, sustantivos:1
+             :3, adjetivos:2, sustantivos:1
             retorna una lista con N(5) palabras
         """
         cantidad_palabras = {}
