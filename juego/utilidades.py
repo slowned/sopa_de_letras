@@ -6,13 +6,12 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 from pattern.web import Wikia, Wiktionary
 import string
-from .opciones import *
 
 __all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
-    'Notificacion'
+    'Notificacion' 
 ]
 
 
@@ -282,6 +281,9 @@ class Configuracion():
             self.oficina = 'oficina5'
         else:
             self.oficina = False
+    
+    
+      
 
     def agregar_color(self, tipo, color):
         """
@@ -410,7 +412,7 @@ class Validacion():
                 elif evento == '_quit_':
                     ventana.Close()
                 else:
-                   Opcion.opciones()
+                   #Opcion.opciones()
                    ventana.Close()
             
         else:
@@ -451,9 +453,12 @@ class Validacion():
         verbos = int(valores.get(VERB))
         sustantivos = int(valores.get(NOUN))
         adjetivos = int(valores.get(ADJECTIVE))
-        if verbos or sustantivos or adjetivos:
+        cant_palabras = verbos + sustantivos + adjetivos
+        if cant_palabras >= 5:
             return True
-        return False
+        else:
+            sg.Popup('Ingrese un minimo de 5 palabras :O')
+            #return False
 
 
 def generar_palabras(palabras):

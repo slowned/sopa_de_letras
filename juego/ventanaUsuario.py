@@ -38,7 +38,7 @@ def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
     add = 0
     indice = dim_columna * fila_palabra
     #Agragamos 3 columnas
-    while pos_columna < (dim_columna +3):
+    while pos_columna < (dim_columna):
         if pos_columna == palabra.posicion[1]:
             for letra in palabra.nombre:
                 key_letra = indice + add
@@ -65,7 +65,7 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
     pos_fila = 0
     add=0
     #agregando aqui 3 filas
-    while pos_fila < (dim_fila+3):
+    while pos_fila < (dim_fila):
         key_letra = dim_fila * columna_palabra + add
         key = str(key_letra)
         if(pos_fila == palabra.posicion[1]):
