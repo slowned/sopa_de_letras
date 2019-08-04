@@ -14,6 +14,7 @@ from .utilidades import PALABRAS_TODAS
 
 from .utilidades import *
 from .juego import Juego
+
 __all__=['Opcion']
 
 class Opcion():
