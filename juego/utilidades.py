@@ -2,7 +2,9 @@ import random
 import PySimpleGUI as sg
 from pattern.es import parse
 from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
+# En las dos primeras entregas usamos una libreria erronea Wiktionaryparser
 from wiktionaryparser import WiktionaryParser
+from pattern.web import Wikia, Wiktionary
 import string
 
 __all__ = [
@@ -280,6 +282,9 @@ class Configuracion():
         else:
             self.oficina = False
 
+
+
+
     def agregar_color(self, tipo, color):
         """
             tipo: sustantivo, adjetivo, verbo
@@ -323,10 +328,13 @@ class Notificacion():
         """
         genera reporte de palabras no existentes
         """
+        #archivo = open("reporte.txt", "x")
         reporte = open("reporte.txt", "a+")
         # TODO: generar reporte mas claro.. la palabra tal no existe en wiki
         # comparar con patter, dar un poco de informacion
-        reporte.write(palabra)
+        linea = "* La palabra ingresada \"{}\" no puedo valirdarse con wiktionario \n".format(palabra)
+        reporte.write(linea)
+        reporte.close()
 
     @classmethod
     def instrucciones(cls):
@@ -341,7 +349,8 @@ class Notificacion():
 
 
 class Validacion():
-    wiki = WiktionaryParser
+    wiki2 = WiktionaryParser
+    wiki = Wiktionary(language="es")
 
     @classmethod
     def validar_con_wikcionario(cls, palabra):
@@ -350,16 +359,17 @@ class Validacion():
         False en caso que la palabra no se encuentre en
         wikcionacio
         """
-        try:
-            palabra = str(palabra.lower())
-            word = cls.wiki().fetch(palabra, "spanish")
-            if word[0].get('definitions'):
-                definicion = word[0].get('definitions')
-                return palabra, definicion
-        except:
-            print("Error inesperado al consultar con wikcionario")
-
+        palabra = str(palabra.lower())
+        word = Wiktionary(palabra, language="es")
+        if hasattr(word, "sections"):
+            esp = palabra.sections[1]
+            definition = esp.children[0].string
+            return palabra, definition
         return False, False
+
+
+
+
 
     @classmethod
     def validar_con_pattern(cls, palabra):
@@ -390,16 +400,38 @@ class Validacion():
                 faltantes.remove(palabra.nombre.upper())
 
         if len(palabras_ganar) == bien:
-            sg.Popup('GANASTE',
-                     'Felicitaciones has ganado!!')
+            layout = [
+            [sg.Text('¡GANASTE! Has encontrado todas las palabras',font=('Arial', 14), justification='center')],
+            [sg.T(' ' * 20),sg.Button('Volver al Inicio',size=(12,1),key='_home_'),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
+            ]
+            ventana = sg.Window('Ganaste').Layout(layout)
+            while True:
+                evento, valores = ventana.Read()
+                if evento is None:
+                    break
+                elif evento == '_quit_':
+                    ventana.Close()
+                else:
+                   #Opcion.opciones()
+                   ventana.Close()
+
         else:
-            sg.Popup(
-                'perdiste',
-                'Lo siento, pero perdiste',
-                'palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),
-                'palabras correctas: {}'.format(correctas),
-                'palabras restantes: {}'.format(faltantes)
-            )
+            layout2 = [
+            [sg.Text('¡PERDISTE! No has acertado todas las palabras',font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras correctas: {}'.format(correctas),font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras restantes: {}'.format(faltantes),font=('Arial', 12), justification='center')],
+            [sg.Button('Reintentar',size=(12,1),key='_again_',),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
+            ]
+            ventana2 = sg.Window('Perdiste').Layout(layout2)
+            while True:
+                evento, valores = ventana2.Read()
+                if evento is None:
+                    break
+                elif evento == '_quit_':
+                    ventana2.Close()
+                else:
+                    break
 
     @classmethod
     def verificar_colores(cls, dict_colores):
@@ -421,9 +453,12 @@ class Validacion():
         verbos = int(valores.get(VERB))
         sustantivos = int(valores.get(NOUN))
         adjetivos = int(valores.get(ADJECTIVE))
-        if verbos or sustantivos or adjetivos:
+        cant_palabras = verbos + sustantivos + adjetivos
+        if cant_palabras >= 5:
             return True
-        return False
+        else:
+            sg.Popup('Ingrese un minimo de 5 palabras :O')
+            #return False
 
 
 def generar_palabras(palabras):

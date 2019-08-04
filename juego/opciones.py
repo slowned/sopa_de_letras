@@ -13,7 +13,9 @@ from juego.constantes import (
 from .utilidades import PALABRAS_TODAS
 
 from .utilidades import *
-from .juego import Juego
+from juego.juego import Juego
+
+__all__ = ['Opcion']
 
 __all__=['Opcion']
 
@@ -22,7 +24,6 @@ class Opcion():
     def opciones(cls):
         AGREGAR = 'Agregar'
         JUGAR = 'Jugar'
-
 
         layout = [
             [sg.Text('Configuraciones', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
@@ -120,9 +121,6 @@ class Opcion():
                         valores.update({'opciones': config})
                         window.Close()
                         Juego.jugar(valores, config)
-                    else:
-                        mensaje = ("Campo obligatorio: Cantidad de palabras", "Tenes que seleccionar una cantidad minima de palabras para poder encontrarlas")
-                        Notificacion.aviso(mensaje)
                 else:
                     mensaje = ("Campo obligatorio: Colores", "Asocia un color a un tipo de palabra, ejemplo: selecciona sustantivo y asignale el color amarillo")
                     Notificacion.aviso(mensaje)
