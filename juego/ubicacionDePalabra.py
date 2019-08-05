@@ -76,23 +76,45 @@ def listaPalabrasHorizontal(lista_palabras):
     return lista_palabras_posicion
 
 
+# def listaPalabrasVertical(lista_palabras):
+#     """
+#         -> Recibe una lista con objPalabra
+#         -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion VERTICAL
+#     """
+#     lista_palabras_posicion = []
+#     # fila, columna = dimensionGrillaVertical(lista_palabras)(creo q aqui es al reves)
+#     fila, columna= dimensionGrillaVertical(lista_palabras)
+#     lista_posicion = []
+#     for palabra in lista_palabras:
+#         generarPosicionVertical(palabra, fila, columna)
+#         posicion_palabra = palabra.posicion
+#         while palabra.posicion[1] in lista_posicion:
+#             generarPosicionVertical(palabra, fila, columna)
+#             posicion_palabra = palabra.posicion
+#         lista_posicion.append(posicion_palabra[1])
+#         lista_palabras_posicion.append(palabra)
+#     return lista_palabras_posicion
 def listaPalabrasVertical(lista_palabras):
     """
         -> Recibe una lista con objPalabra
         -> Retorna una lista de objPalabras con su ubicacion respectiva en la grilla de direccion VERTICAL
     """
     lista_palabras_posicion = []
-    # fila, columna = dimensionGrillaVertical(lista_palabras)(creo q aqui es al reves)
-    fila, columna= dimensionGrillaVertical(lista_palabras)
-    lista_posicion = []
+    fila, columna = dimensionGrillaVertical(lista_palabras)
+    posicion_vertical = []
     for palabra in lista_palabras:
         generarPosicionVertical(palabra, fila, columna)
         posicion_palabra = palabra.posicion
-        while palabra.posicion[1] in lista_posicion:
-            generarPosicionVertical(palabra, fila, columna)
-            posicion_palabra = palabra.posicion
-        lista_posicion.append(posicion_palabra[1])
+        if posicion_palabra[1] in posicion_vertical:
+            while palabra.posicion[1] in posicion_vertical:
+                generarPosicionVertical(palabra, fila, columna)
+            #posicion_palabra = palabra.posicion
+            posicion_vertical.append(palabra.posicion[1])
+        else:
+            posicion_vertical.append(palabra.posicion[1])
+
         lista_palabras_posicion.append(palabra)
+
     return lista_palabras_posicion
 
 

@@ -6,6 +6,7 @@ from pattern.text.es.inflect import NOUN, VERB, ADJECTIVE
 from wiktionaryparser import WiktionaryParser
 from pattern.web import Wikia, Wiktionary
 import string
+from juego.opciones import *
 
 __all__ = [
     'Configuracion',
