@@ -11,7 +11,7 @@ __all__ = [
     'Configuracion',
     'Palabra',
     'Validacion',
-    'Notificacion'
+    'Notificacion',
 ]
 
 
@@ -208,7 +208,7 @@ class Configuracion():
 
     def seleccionar_palabras(self, evento):
         """ llega un diccionario con la cantidad de palabras
-            verbos:3, adjetivos:2, sustantivos:1
+             :3, adjetivos:2, sustantivos:1
             retorna una lista con N(5) palabras
         """
         cantidad_palabras = {}
@@ -281,6 +281,9 @@ class Configuracion():
             self.oficina = 'oficina5'
         else:
             self.oficina = False
+
+
+
 
     def agregar_color(self, tipo, color):
         """
@@ -376,7 +379,7 @@ class Validacion():
 
 
 
-        
+
 
     @classmethod
     def validar_con_pattern(cls, palabra):
@@ -407,16 +410,38 @@ class Validacion():
                 faltantes.remove(palabra.nombre.upper())
 
         if len(palabras_ganar) == bien:
-            sg.Popup('GANASTE',
-                     'Felicitaciones has ganado!!')
+            layout = [
+            [sg.Text('¡GANASTE! Has encontrado todas las palabras',font=('Arial', 14), justification='center')],
+            [sg.T(' ' * 20),sg.Button('Volver al Inicio',size=(12,1),key='_home_'),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
+            ]
+            ventana = sg.Window('Ganaste').Layout(layout)
+            while True:
+                evento, valores = ventana.Read()
+                if evento is None:
+                    break
+                elif evento == '_quit_':
+                    ventana.Close()
+                else:
+                   #Opcion.opciones()
+                   ventana.Close()
+
         else:
-            sg.Popup(
-                'perdiste',
-                'Lo siento, pero perdiste',
-                'palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),
-                'palabras correctas: {}'.format(correctas),
-                'palabras restantes: {}'.format(faltantes)
-            )
+            layout2 = [
+            [sg.Text('¡PERDISTE! No has acertado todas las palabras',font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras correctas: {}'.format(correctas),font=('Arial', 12), justification='center')],
+            [sg.Text('Palabras restantes: {}'.format(faltantes),font=('Arial', 12), justification='center')],
+            [sg.Button('Reintentar',size=(12,1),key='_again_',),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
+            ]
+            ventana2 = sg.Window('Perdiste').Layout(layout2)
+            while True:
+                evento, valores = ventana2.Read()
+                if evento is None:
+                    break
+                elif evento == '_quit_':
+                    ventana2.Close()
+                else:
+                    break
 
     @classmethod
     def verificar_colores(cls, dict_colores):
@@ -438,9 +463,12 @@ class Validacion():
         verbos = int(valores.get(VERB))
         sustantivos = int(valores.get(NOUN))
         adjetivos = int(valores.get(ADJECTIVE))
-        if verbos or sustantivos or adjetivos:
+        cant_palabras = verbos + sustantivos + adjetivos
+        if cant_palabras >= 5:
             return True
-        return False
+        else:
+            sg.Popup('Ingrese un minimo de 5 palabras :O')
+            #return False
 
 
 def generar_palabras(palabras):

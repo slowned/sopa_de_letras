@@ -17,6 +17,7 @@ from juego.juego import Juego
 
 __all__ = ['Opcion']
 
+__all__=['Opcion']
 
 class Opcion():
     @classmethod
@@ -124,9 +125,6 @@ class Opcion():
                         valores.update({'opciones': config})
                         window.Close()
                         Juego.jugar(valores, config)
-                    else:
-                        mensaje = ("Campo obligatorio: Cantidad de palabras", "Tenes que seleccionar una cantidad minima de palabras para poder encontrarlas")
-                        Notificacion.aviso(mensaje)
                 else:
                     mensaje = ("Campo obligatorio: Colores", "Asocia un color a un tipo de palabra, ejemplo: selecciona sustantivo y asignale el color amarillo")
                     Notificacion.aviso(mensaje)
