@@ -344,6 +344,16 @@ class Notificacion():
         '5) Volver al paso 1) hasta que crea que haya seleccionado todas las palabras en la sopa',
         '6) Presionar "Verificar" y usted sabrá si gano o perdio el juego')
 
+    @classmethod
+    def ver_reporte(cls):
+        reporte = "reporte.txt"
+        with open(reporte, "r") as f:
+            lineas = f.readlines()
+        texto = ''
+
+        for linea in lineas:
+            texto += linea
+        sg.PopupScrolled(texto)
 
 class Validacion():
     wiki2 = WiktionaryParser
