@@ -17,10 +17,6 @@ from juego.juego import Juego
 
 __all__ = ['Opcion']
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5b858d56684727e14b3b84f91452caa69c74383f
 class Opcion():
     @classmethod
     def opciones(cls):
@@ -58,7 +54,7 @@ class Opcion():
             evento, valores = window.Read()
             if evento == 'Agregar':
                 valor_palabra = valores.get(0, None)
-                if valor_palabra:
+                if valor_palabra
                     #   TODO: cambiar libreria wikictionario(patters)
                     #   comparar con patters
                     palabra, definicion = Validacion.validar_con_wikcionario(valor_palabra)
