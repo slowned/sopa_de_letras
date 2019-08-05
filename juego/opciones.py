@@ -54,7 +54,7 @@ class Opcion():
             evento, valores = window.Read()
             if evento == 'Agregar':
                 valor_palabra = valores.get(0, None)
-                if valor_palabra
+                if valor_palabra:
                     #   TODO: cambiar libreria wikictionario(patters)
                     #   comparar con patters
                     palabra, definicion = Validacion.validar_con_wikcionario(valor_palabra)
