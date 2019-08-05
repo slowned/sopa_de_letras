@@ -17,7 +17,10 @@ from juego.juego import Juego
 
 __all__ = ['Opcion']
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5b858d56684727e14b3b84f91452caa69c74383f
 class Opcion():
     @classmethod
     def opciones(cls):
@@ -27,14 +30,16 @@ class Opcion():
         layout = [
             [sg.Text('Configuraciones', size=(30, 1), font=("Helvetica", 25), text_color='blue')],
             [sg.Text('Ingrese una a una las palabras a encontrar')],
-            [sg.InputText(), sg.ReadButton('Agregar')],
+            [sg.InputText(),
+                sg.ReadButton('Agregar'),
+                sg.ReadButton('ver_reporte')],
             [sg.Text('Elegir los colores para los tipos de palabras')],
             [sg.Button('Verbo',key='verb'), sg.Button('Sustantivo',key='noun'), sg.Button('Adjetivo',key='adjetive')],
             [sg.Column(AYUDA_COL)],
             [sg.Column(TIPO_PALABRAS_CANT)],
             [sg.Column(TAMANIO_COL)],
             [sg.Column(DIRECCION_COL)],
-            [sg.Button('Tipografia Título', key = '__titulo__')],
+            [sg.Button('Tipografia Titulo', key = '__titulo__')],
             [sg.Button('Tipografia Texto', key = '__texto__')],  # TODO titulo y texto
             [sg.Text('Estilo')],  # TODO
             [sg.Column(OFICINAS_COL)],  # TODO
@@ -72,6 +77,8 @@ class Opcion():
                     mensaje = (("Campo vacio", "debe agregar palabras para jugar"))
                     Notificacion.aviso(mensaje)
 
+            elif evento == 'ver_reporte':
+                Notificacion.ver_reporte()
 
             elif evento == 'verb':
                 color_select = paleta_colores()

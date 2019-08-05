@@ -96,7 +96,7 @@ class Juego():
     def dibujar_excluir(cls):
         cls.columna_opciones.append([sg.T(' ' * 1)])
         cls.columna_opciones.append([sg.Button("ELIMINAR ULTIMA PALABRA", button_color=('black','green yellow'),size=(15,2), key='_clean_')])
-        cls.columna_opciones.append([sg.Button("DESHACER", button_color=('black','SlateBlue2'),size=(15,1), key='_undo_'),sg.Button("LIMPIAR SOPA", button_color=('black','gold3'),size=(15,1), key='_undoall_')])
+        cls.columna_opciones.append([sg.Button("DESHACER", button_color=('black','SlateBlue2'),size=(15,1), key='_undo_'),sg.Button("BORRAR TODO", button_color=('black','gold3'),size=(15,1), key='_undoall_')])
 
     @classmethod
     def instrucciones_ayuda(cls):

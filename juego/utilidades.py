@@ -348,6 +348,16 @@ class Notificacion():
         '5) Volver al paso 1) hasta que crea que haya seleccionado todas las palabras en la sopa',
         '6) Presionar "Verificar" y usted sabrá si gano o perdio el juego')
 
+    @classmethod
+    def ver_reporte(cls):
+        reporte = "reporte.txt"
+        with open(reporte, "r") as f:
+            lineas = f.readlines()
+        texto = ''
+
+        for linea in lineas:
+            texto += linea
+        sg.PopupScrolled(texto)
 
 class Validacion():
     wiki2 = WiktionaryParser
@@ -401,38 +411,13 @@ class Validacion():
                 faltantes.remove(palabra.nombre.upper())
 
         if len(palabras_ganar) == bien:
-            layout = [
-            [sg.Text('¡GANASTE! Has encontrado todas las palabras',font=('Arial', 14), justification='center')],
-            [sg.T(' ' * 20),sg.Button('Volver al Inicio',size=(12,1),key='_home_'),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
-            ]
-            ventana = sg.Window('Ganaste').Layout(layout)
-            while True:
-                evento, valores = ventana.Read()
-                if evento is None:
-                    break
-                elif evento == '_quit_':
-                    ventana.Close()
-                else:
-                   #Opcion.opciones()
-                   ventana.Close()
+            sg.Popup('¡GANASTE! Has encontrado todas las palabras')
 
         else:
-            layout2 = [
-            [sg.Text('¡PERDISTE! No has acertado todas las palabras',font=('Arial', 12), justification='center')],
-            [sg.Text('Palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),font=('Arial', 12), justification='center')],
-            [sg.Text('Palabras correctas: {}'.format(correctas),font=('Arial', 12), justification='center')],
-            [sg.Text('Palabras restantes: {}'.format(faltantes),font=('Arial', 12), justification='center')],
-            [sg.Button('Reintentar',size=(12,1),key='_again_',),sg.T(' ' * 4),sg.Button('Salir del Juego',size=(12,1),key='_quit_')]
-            ]
-            ventana2 = sg.Window('Perdiste').Layout(layout2)
-            while True:
-                evento, valores = ventana2.Read()
-                if evento is None:
-                    break
-                elif evento == '_quit_':
-                    ventana2.Close()
-                else:
-                    break
+            sg.Popup('¡PERDISTE! No has acertado todas las palabras',
+            'Palabras totales: {}'.format([palabra.nombre for palabra in palabras_ganar]),
+            'Palabras correctas: {}'.format(correctas),
+            'Palabras restantes: {}'.format(faltantes))
 
     @classmethod
     def verificar_colores(cls, dict_colores):
