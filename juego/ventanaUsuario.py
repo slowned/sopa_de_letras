@@ -60,17 +60,43 @@ def elementos_fila(dim_columna, fila_palabra, palabra, color_letra, config):
     return letras_fila
 
 
-def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
+# def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
+#     letra_columna = []
+#     pos_fila = 0
+#     add=0
+#     #agregando aqui 3 filas
+#     while pos_fila < (dim_fila):
+#         key_letra = dim_fila * columna_palabra + add
+#         key = str(key_letra)
+#         if(pos_fila == palabra.posicion[1]):
+#             for letra in palabra.nombre:
+#                 key_letra = dim_fila * columna_palabra + add
+#                 key = str(key_letra)
+#                 if  config.tamanio:
+#                     letra = letra.lower()
+#                 else:
+#                     letra = letra.upper()
+#                 letra_columna.append(sg.Button(letra,button_color = color_letra, font=config.tipografia_texto ,size=(4,1),key=key))
+#                 add += 1
+#             pos_fila+= palabra.longitud
+#         else:
+#             letra_columna.append(sg.Button(letra_random(config.tamanio), font=config.tipografia_texto ,button_color = color_letra,size=(4,1),key=key))
+#             pos_fila += 1
+#             add+=1
+#     return letra_columna
+
+
+def elementos_columna(dim_fila,dim_columna,palabra,color_letra,config):
     letra_columna = []
     pos_fila = 0
     add=0
     #agregando aqui 3 filas
     while pos_fila < (dim_fila):
-        key_letra = dim_fila * columna_palabra + add
+        key_letra = dim_columna * dim_fila + add
         key = str(key_letra)
-        if(pos_fila == palabra.posicion[1]):
+        if(pos_fila == palabra.posicion[0]):
             for letra in palabra.nombre:
-                key_letra = dim_fila * columna_palabra + add
+                key_letra = dim_columna * dim_fila + add
                 key = str(key_letra)
                 if  config.tamanio:
                     letra = letra.lower()
@@ -80,10 +106,14 @@ def elementos_columna(dim_fila, columna_palabra, palabra, color_letra, config):
                 add += 1
             pos_fila+= palabra.longitud
         else:
-            letra_columna.append(sg.Button(letra_random(config.tamanio), font=config.tipografia_texto ,button_color = color_letra,size=(4,1),key=key))
+            key_letra = dim_fila + add
+            key = str(key_letra)
+            letra_columna.append(sg.Button(letra_random(config.tamanio),button_color = color_letra, font=config.tipografia_texto ,size=(4,1),key=key))
             pos_fila += 1
             add+=1
     return letra_columna
+
+
 
 
 def generarGrillaHorizontal(dimension_grilla, lista_palabras, color_letra, config):
@@ -106,6 +136,24 @@ def generarGrillaHorizontal(dimension_grilla, lista_palabras, color_letra, confi
     return grilla_sopa_letras
 
 
+# def generarGrillaVertical(dimension_grilla, lista_palabras, color_letra, config):
+#     """
+#         Entrada:
+#                 Dimension de la grilla: (dim_fila, dim_columna)
+#                 Diccionario ordenado de palabras : {palabra:(fila, columna)}
+#         Salida: Grilla
+#     """
+#     dim_fila, dim_columna = dimension_grilla
+#     columna_sopa = []
+#     grilla_sopa_letras = []
+#     for columna in range(dim_columna):
+#         columna_sopa = elementos_columna(
+#             dim_fila, columna, lista_palabras[columna], color_letra, config)
+#         grilla_sopa_letras.append(columna_sopa)
+
+#     return grilla_sopa_letras
+
+
 def generarGrillaVertical(dimension_grilla, lista_palabras, color_letra, config):
     """
         Entrada:
@@ -113,12 +161,18 @@ def generarGrillaVertical(dimension_grilla, lista_palabras, color_letra, config)
                 Diccionario ordenado de palabras : {palabra:(fila, columna)}
         Salida: Grilla
     """
-    dim_fila, dim_columna = dimension_grilla
-    columna_sopa = []
-    grilla_sopa_letras = []
-    for columna in range(dim_columna):
-        columna_sopa = elementos_columna(
-            dim_fila, columna, lista_palabras[columna], color_letra, config)
-        grilla_sopa_letras.append(columna_sopa)
-
-    return grilla_sopa_letras
+    fila,columna = dimension_grilla
+    lista_palabras_sopa = []
+    #nombre_palabras =[]
+    layout = []
+    for i in range(0, columna):
+        palabra = elementos_columna(fila,columna,lista_palabras[i],color_letra,config)
+        lista_palabras_sopa.append(palabra)
+    #     nombre_palabras.append(palabra.)
+    # print(nombre_palabras)
+    for i in range(0,fila):
+        letras_ubicacion_vertical=[]
+        for j in range(0,columna):
+            letras_ubicacion_vertical.append(lista_palabras_sopa[j][i])
+        layout.append(letras_ubicacion_vertical)
+    return layout

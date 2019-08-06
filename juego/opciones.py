@@ -17,10 +17,6 @@ from juego.juego import Juego
 
 __all__ = ['Opcion']
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5b858d56684727e14b3b84f91452caa69c74383f
 class Opcion():
     @classmethod
     def opciones(cls):
